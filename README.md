@@ -83,15 +83,15 @@ Here below are reported the steps and the options to set to run each block.
 
 ### Block One: Create Study Folder ex-Novo
 
-#### Workfolw
+#### Workflow
 
 ```mermaid
 flowchart  TD
-A[Conda activate VEP\ Start VARAN]  --> B[INPUT FILE/FOLDER CNV,SNV, TSV]
+A[Conda activate VEP\ Start VARAN]  --> B[FOLDER CNV,SNV, TSV]
 B[INPUT FILE/FOLDER CNV,SNV, TSV] -->  C[W A L K] 
 C[W A L K] --> D((FILTER_CLINVAR))
 D((FILTER_CLINVAR)) --> E((CONCATENATE)) 
-E((CONCATENATE)) --> F((MAKE_META, INPUT MAF))
+E((CONCATENATE)) --> F((MAKE_META, MAKE_CASES, INPUT MAF))
  F --> U[STUDY_FOLDER]
 U --> G[UPLOAD_ON_CBIOPORTAL]
 ```

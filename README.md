@@ -41,7 +41,7 @@ To test the installation and check if everything works, launch the main script <
 
 ```
 cd <varan_folder_path>/varan-2.0
-./varan.py -h
+python varan.py -h
 ```
 If everything works, you will see a printed output like this:
 ```
@@ -147,15 +147,15 @@ These are the options that can be set for this block:
 
 <ins>vcf file input - SNV </ins>: Launch this command to perform a filtering on vcf files, a filter on VUS variants and save (or rewrite) a study folder starting from a file listing snv vcf files.
 ```
-./varan.py -i <path_to_vfc_tsv_file> -c <cancer_name> -t snv -f -v -o <path_to_output_folder> -w
+python varan.py -i <path_to_vfc_tsv_file> -c <cancer_name> -t snv -f -v -o <path_to_output_folder> -w
 ```
 <ins>vcf file input - CNV </ins>: Launch this command to perform a filtering on vcf files, a filter on VUS variants and save (or rewrite) a study folder starting from a file listing cnv vcf files.
 ```
-./varan.py -i <path_to_vfc_tsv_file> -c <cancer_name> -t cnv -f -v -o <path_to_output_folder> -w
+python varan.py -i <path_to_vfc_tsv_file> -c <cancer_name> -t cnv -f -v -o <path_to_output_folder> -w
 ```
 <ins>vcf directory </ins>: Launch this command to perform a filtering on vcf files, a filter on VUS variants and save (or rewrite) a study folder starting from a directory containing all of the vcf files.
 ```
-./varan.py -d <path_to_vfc_folder> -c <cancer_name> -f -v -o <path_to_output_folder> -w
+python varan.py -d <path_to_vfc_folder> -c <cancer_name> -f -v -o <path_to_output_folder> -w
 ```
 
 #### 3. Output
@@ -219,19 +219,19 @@ These are the options that can be set for this block:
 <ins>sample update</ins>: Launch this command to update a study folder by inserting or updating clinical and samples info and to save a new updated one in the output path.
 
 ```
-./varan.py -u -p <path_to_old_study_folder> -n <path_to_new_study_folder> -o <path_to_output_folder>
+python varan.py -u -p <path_to_old_study_folder> -n <path_to_new_study_folder> -o <path_to_output_folder>
 ```
 <p align="justify">
 <ins>sample removal</ins>: Launch this command to remove a list of samples from a study folder and to save a new one without the removed samples in the output path.
 
 ```
-./varan.py -r -p <path_to_study_folder> -s <path_to_sample_list_file> -o <path_to_output_folder>
+python varan.py -r -p <path_to_study_folder> -s <path_to_sample_list_file> -o <path_to_output_folder>
 ```
 <p align="justify">
 <ins>sample extraction</ins>: Launch this command to extract a list of samples from a study folder and to save a new one containing the extracted samples only in the output path.
 
 ```
-./varan.py -e -p <path_to_study_folder> -s <path_to_sample_list_file> -o <path_to_output_folder>
+python varan.py -e -p <path_to_study_folder> -s <path_to_sample_list_file> -o <path_to_output_folder>
 ```
 #### 3. Output
 

@@ -88,8 +88,8 @@ Here below are reported the steps and the options to set to run each block.
 ```mermaid
 flowchart  TD
 A[Conda activate VEP\ Start VARAN]  --> B[FOLDER CNV,SNV, TSV]
-B[FOLDER CNV,SNV, TSV] -->  C[W A L K] 
-C[W A L K] --> D((FILTER_CLINVAR))
+B -->  C[W A L K] 
+C --> D((FILTER_CLINVAR))
 D((FILTER_CLINVAR)) --> E((CONCATENATE)) 
 E((CONCATENATE)) --> F((MAKE_META, MAKE_CASES, INPUT MAF))
  F --> U[STUDY_FOLDER]
@@ -103,7 +103,7 @@ To create a new study folder, the user must give .vcf files as input to the prog
 This can be done in two different ways:
 
 
-<b>tsv file</b>: user must preapare a tsv file containing all of the vcf files' paths <b>Folder</b>: user must organize a folder containing all of the vcf files and a csv file where the patient IDs and samples IDs are listed. The structure of this folder have to follow the one reported below </li>
+<b>tsv file</b>: user must prepare a tsv file containing all of the vcf files' paths <b>Folder</b>: user must organize a folder containing all of the vcf files and a csv file where the patient IDs and samples IDs are listed. The structure of this folder have to follow the one reported below </li>
 
 ```
 input_folder/
@@ -122,11 +122,11 @@ input_folder/
 └── clinical_info.tsv
 ```
 Where:
-* <p align="justify">*CombinedVariantOutput.tsv* is a tsv file that is necessary to TMB, MSI and Fusions evaluation and that has to contain the [TMB], [MSI] and [Fusions] fields. It has to be named as *PatientID_CombinedVariantOutput.tsv*
+* <p align="justify">*CombinedVariantOutput.tsv* is a tsv file that is necessary to TMB, MSI and Fusions evaluation and that has to contain [TMB], [MSI] and [Fusions] fields. It has to be named as *PatientID_CombinedVariantOutput.tsv*
 
 * <p align="justify">*clinical_info.tsv* is a tsv file that is necessary to map tha sample ID to the patient ID. It has to be structured as a two columns tables with "PatientID" and "SampleID" fields.
 
-⚠️ *An exemple of both input types can be found in the **input_templates** folder*
+⚠️ *An example of both input types can be found in the **input_templates** folder*
 
 #### 2. Launch Varan main
 
@@ -135,13 +135,14 @@ These are the options that can be set for this block:
 | Options | Description | Type | Required
 |-------------------------|----------------| :---:| :---:|
 |-o <br> --output_folder| <p align="justify">Add this option to insert the path where to save the output folder| string | Yes
-|-d <br> --Directory| <p align="justify">Add this option to insert the path to the input folder containing the vcf files | booleanstring | No
 |-i <br> --input| <p align="justify">Add this option to insert the path to the input tsv file where the vcf files are listed|  | No
 |-c <br> --cancer| <p align="justify">Add this option to specify a cancer type| string | No
 |-f <br> --filter_snv| <p align="justify">Add this option to filter out from the vcf the variants with dot (.) and PASS in Alt and Filter column respectively |boolean| No
 |-t <br> --vcf_type|<p align="justify">Add this option to specify the type of vcf (snv/cnv) |string|Only if the -i option is selected
 |-w <br> --overWrite| <p align="justify">Add this option to overwrite output folder if already exists (⚠️ *if not set, the program will stop if it finds an existing output directory*)|boolean| No
 |-v <br> --vus| <p align="justify">Add this option to filter out VUS variants | boolean | No
+|-s <br> --SampleList| <p align="justify">Add this option to insert the path to the txt file containing the list of samples to remove/extract from an existing study folder| string | Only if the -r or -e option is selected
+|-p <br> --Path| <p align="justify">Add this option to insert the path to the already existing study folder to update or from where remove/extract samples | string | Only if the -u, -r or -e option is selected
 
 **Example:**
 
@@ -186,7 +187,7 @@ cancer_name
 When updating/removing/extracting samples, a new study folder will be created within the output_folder with the name <i>updated_data</i> in which the modified files will be stored. 
 
 ### Block Two: Modify Existing Study Folder
-#### Workfolw
+#### Workflow
 ```mermaid
 flowchart  TD
 
@@ -206,12 +207,15 @@ These are the options that can be set for this block:
 
 | Options | Input | Type | Required
 |----------------|----------------| :---:| :---:|
+|-o <br> --output_folder| <p align="justify">Add this option to insert the path where to save the output folder| string | Yes
 |-u <br> --Update| <p align="justify">Add this option if you want to update an existing study folder| boolean | No
 |-r <br> --Remove| <p align="justify">Add this option if you want to remove samples from an existing study folder| boolean | No
 |-e <br> --Extract| <p align="justify">Add this option if you want to extract samples from an existing study folder| boolean | No
 |-n <br> --NewPath| <p align="justify">Add this option to insert the path where to save the updated study folder | string | Only if the -u option is selected
 |-s <br> --SampleList| <p align="justify">Add this option to insert the path to the txt file containing the list of samples to remove/extract from an existing study folder| string | Only if the -r or -e option is selected
 |-p <br> --Path| <p align="justify">Add this option to insert the path to the already existing study folder to update or from where remove/extract samples | string | Only if the -u, -r or -e option is selected
+
+
 
 **Example:**
 

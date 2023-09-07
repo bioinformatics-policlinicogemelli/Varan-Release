@@ -88,7 +88,7 @@ Here below are reported the steps and the options to set to run each block.
 ```mermaid
 flowchart  TD
 A[Conda activate VEP\ Start VARAN]  --> B[FOLDER CNV,SNV, TSV]
-B[INPUT FILE/FOLDER CNV,SNV, TSV] -->  C[W A L K] 
+B[FOLDER CNV,SNV, TSV] -->  C[W A L K] 
 C[W A L K] --> D((FILTER_CLINVAR))
 D((FILTER_CLINVAR)) --> E((CONCATENATE)) 
 E((CONCATENATE)) --> F((MAKE_META, MAKE_CASES, INPUT MAF))

@@ -141,8 +141,6 @@ These are the options that can be set for this block:
 |-t <br> --vcf_type|<p align="justify">Add this option to specify the type of vcf (snv/cnv) |string|Only if the -i option is selected
 |-w <br> --overWrite| <p align="justify">Add this option to overwrite output folder if already exists (⚠️ *if not set, the program will stop if it finds an existing output directory*)|boolean| No
 |-v <br> --vus| <p align="justify">Add this option to filter out VUS variants | boolean | No
-|-s <br> --SampleList| <p align="justify">Add this option to insert the path to the txt file containing the list of samples to remove/extract from an existing study folder| string | Only if the -r or -e option is selected
-|-p <br> --Path| <p align="justify">Add this option to insert the path to the already existing study folder to update or from where remove/extract samples | string | Only if the -u, -r or -e option is selected
 
 **Example:**
 

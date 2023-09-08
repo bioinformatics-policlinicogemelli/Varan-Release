@@ -46,8 +46,9 @@ def create_meta_study(cancer, project_name,vus, description, output_dir):
         }
 
     meta_file = open(f"{output_dir}/meta_study.txt", "w")
+    logger.info("Writing meta_study.txt file...")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -75,8 +76,9 @@ def create_meta_clinical_patient(cancer,project_name, vus, output_dir):
         "data_filename": data_filename,
     }
     meta_file = open(f"{output_dir}/meta_clinical_patient.txt", "w")
+    logger.info("Writing meta_clinical_patient.txt file...")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -104,8 +106,9 @@ def create_meta_clinical_sample(cancer,project_name, vus, output_dir):
         "data_filename": data_filename,
     }
     meta_file = open(f"{output_dir}/meta_clinical_sample.txt", "w")
+    logger.info("Writing meta_clinical_sample.txt file...")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -147,8 +150,9 @@ def create_meta_mutations(cancer, project_name,vus, profile, output_dir):
         "data_filename": data_filename,
     }
     meta_file = open(f"{output_dir}/meta_mutations_extended.txt", "w")
+    logger.info("Writing meta_mutations_extended.txt file...")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -188,8 +192,9 @@ def create_meta_sv(cancer,project_name, vus, output_dir):
     }
 
     meta_file = open(f"{output_dir}/meta_sv.txt", "w")
+    logger.info("Writing meta_sv.txt file...")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -229,8 +234,9 @@ def create_meta_cna(cancer,project_name, vus, output_dir):
     }
 
     meta_file = open(f"{output_dir}/meta_cna.txt", "w")
+    logger.info("Writing meta_cna.txt file...")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -263,8 +269,9 @@ def create_meta_cna_hg19(cancer,project_name, vus, output_dir):
     }
 
     meta_file = open(f"{output_dir}/meta_cna_hg19_seg.txt", "w")
+    logger.info("Writing meta_cna_hg19_seg.txt file...")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -300,7 +307,7 @@ def create_cases_sequenced(cancer, vus, cases_list_dir):
 
     meta_file = open(f"{cases_list_dir}/cases_sequenced.txt", "w")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -336,7 +343,7 @@ def create_cases_cna(cancer, vus, cases_list_dir):
 
     meta_file = open(f"{cases_list_dir}/cases_cna.txt", "w")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
     
 
@@ -372,7 +379,7 @@ def create_cases_sv(cancer, vus,cases_list_dir):
 
     meta_file = open(f"{cases_list_dir}/cases_sv.txt", "w")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
+        logger.info(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -389,26 +396,18 @@ def meta_case_main(cancer,vus,output_folder,log=False):
     logger.info("Starting meta_case_main script:")
     logger.info(f"meta_case_main args [cancer:{cancer}, vus:{vus}, output_file:{output_folder}]")
     
-    # instantiate
     config = ConfigParser()
-    # parse existing file
-    # read config file
     configFile = config.read("conf.ini")
     project=config.get("Project","PROJECT_NAME")
     project_name="_"+project
     
-    if vus:
-        study_id = cancer+project_name+"_vus"
-    else:
-        study_id = cancer+project_name
-
-    #
     description=config.get("Project","DESCRIPTION")
     profile=config.get("Project","PROFILE")
 
-    # Make new directory (if does not exist) to store case list files
+    logger.info("Creating case list folder...")
     cases_list_dir = os.path.join(output_folder, "case_lists")
     if os.path.exists(cases_list_dir):
+        logger.info("It seemps that this folder already exists")
         pass
     else:
         os.mkdir(cases_list_dir)
@@ -419,30 +418,38 @@ def meta_case_main(cancer,vus,output_folder,log=False):
     
     if os.path.exists(os.path.join(output_folder,"data_clinical_patient.txt")):
         create_meta_clinical_patient(cancer, project_name,vus, output_folder)
+        logger.info("meta_clinical_patient.txt created!")
     if os.path.exists(os.path.join(output_folder,"data_clinical_sample.txt")):
         create_meta_clinical_sample(cancer,project_name, vus, output_folder)
+        logger.info("meta_clinical_sample.txt created!")
     if os.path.exists(os.path.join(os.path.join(output_folder,"data_mutations_extended.txt"))):
         create_meta_mutations(cancer,project_name, vus, profile, output_folder)
+        logger.info("meta_mutations_extended.txt created!")
     if os.path.exists(os.path.join(os.path.join(output_folder,"data_sv.txt"))):
         create_meta_sv(cancer,project_name, vus, output_folder)
+        logger.info("meta_sv.txt created!")
     if os.path.exists(os.path.join(output_folder,"data_cna.txt")):
         create_meta_cna(cancer,project_name, vus, output_folder)
+        logger.info("meta_cna.txt created!")
     if os.path.exists(os.path.join(output_folder,"data_cna_hg19.seg")):
         create_meta_cna_hg19(cancer, project_name,vus, output_folder)
+        logger.info("meta_cna_hg19.txt created!")
 
     ########### CASE LIST FUNCTION ###########
 
-    try:
-        if os.path.exists(os.path.join(output_folder,"data_mutations_extended.txt")):
-            populate_cases_sequenced(cancer,project_name, vus, output_folder,cases_list_dir)
-    except:
-        pass
-
+    if os.path.exists(os.path.join(output_folder,"data_mutations_extended.txt")):
+        populate_cases_sequenced(cancer,project_name, vus, output_folder,cases_list_dir,logger)
+    else: logger.warning("data_mutations_extended.txt file not found!")
+    
     if os.path.exists(os.path.join(output_folder,"data_cna.txt")):
-        populate_cases_cna(cancer, project_name,vus,output_folder, cases_list_dir)
+        populate_cases_cna(cancer, project_name,vus,output_folder, cases_list_dir,logger)
+    else: logger.warning("data_cna.txt file not found!")
     
     if os.path.exists(os.path.join(output_folder,"data_sv.txt")):
-        populate_cases_sv(cancer,project_name, vus, output_folder,cases_list_dir)
+        populate_cases_sv(cancer,project_name, vus, output_folder,cases_list_dir,logger)
+    else: logger.warning("data_sv.txt file not found!")
+
+    logger.success("Make_meta_and_cases script completed!")
 
 class MyArgumentParser(argparse.ArgumentParser):
   """An argument parser that raises an error, instead of quits"""
@@ -485,4 +492,4 @@ if __name__=="__main__":
     profile=config.get("Project","PROFILE")
 
 
-    meta_case_main(cancer,vus,output)
+    meta_case_main(cancer,vus,output,log=False)

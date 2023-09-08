@@ -8,7 +8,6 @@
 * **walk.py**<br><p align="justify">The `walk.py`  function is a Python script that processes Variant Call Format (VCF) files containing genetic information about Single Nucleotide Polymorphism (SNP) and Copy Number Variation (CNV) variants. Once the `walk` is executed, you will have an output containing the Minor Allele Frequencies (MAF).
 
 	*Options*
-	`-d` input is a folder
 	`-i` path to input
 	`-t` snv or cnv
 	`-f` filter snv
@@ -16,10 +15,6 @@
 	`-w` rewrite study folder
 
 	*Example:*
-	- file input
-	```
-	python3 walk.py  -i <path_to_input_file> -f -t <cnv or snv> -o <path_output_folder> -w
-	```
 	- folder input
 	```
 	python3 walk.py  -i <path_to_input_directory> -d -f -o <path_ output_ folder> -w

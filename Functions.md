@@ -25,7 +25,7 @@
 	python3 walk.py  -i <path_to_input_directory> -d -f -o <path_ output_ folder> -w
 	```
 
-* **filter_clinvar.py**<br><p align="justify">The `filter_clinvar.py` function is a Python script to filter mutations according to ClinVar annotation and/or mutation consequence.
+* **filter_clinvar.py**<br><p align="justify">The `filter_clinvar.py` function is a Python script to filter mutations according to ClinVar annotation and/or mutation consequence and according to VAF and gnomAD frequency.
 
 	-  **VUS option**:
 
@@ -68,6 +68,8 @@
 
 		-  *inframe_deletion*
 
+	Based on frequency, are maintened mutations that have a **VAF** (Variant Allele Frequency) > 0.05 and mutations that have a **gnomAD** frequency < 0.98
+ 
 	*Options*
 	`-f` path folder containing the maf files
 	`-o` output folder

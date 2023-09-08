@@ -19,10 +19,10 @@ def varan(input, cancer, output_folder, filter_snv=False, vcf_type=None, overwri
     
     if not log:
         logger.remove()
-        logfile="Varan_{time:HH-mm-ss.SS}.log"
+        logfile="Varan_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
         logger.info("Welcome to VARAN") 
 
     logger.info(f"Varan args [input:{input}, output_folder:{output_folder}, filter_snv:{filter_snv}, cancer:{cancer}, \
@@ -127,10 +127,10 @@ class MyArgumentParser(argparse.ArgumentParser):
 if __name__ == '__main__':
 	
     logger.remove()
-    logfile="Varan_{time:HH-mm-ss.SS}.log"
+    logfile="Varan_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
     logger.level("INFO", color="<green>")
-    logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True, catch=True)
-    logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+    logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True, catch=True)
+    logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
     logger.info("Welcome to VARAN")
     log=True
 

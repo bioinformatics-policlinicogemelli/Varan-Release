@@ -11,10 +11,10 @@ def extract_main(oldpath,removepath,outputfolder,log=False):
   
     if not log:
         logger.remove()
-        logfile="extract_main_{time:HH-mm-ss.SS}.log"
+        logfile="extract_main_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
     
     logger.info("Starting extract_main script:")
     logger.info(f"extract_main args [oldpath:{oldpath}, removepath:{removepath}, destinationfolder:{destinationfolder}]")	
@@ -129,10 +129,10 @@ if __name__ == '__main__':
         args = parser.parse_args()
     except Exception as err:
         logger.remove()
-        logfile="extract_{time:HH-mm-ss.SS}.log"
+        logfile="extract_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
         logger.critical(f"error: {err}", file=sys.stderr)
 
     oldpath=args.OldDataPath

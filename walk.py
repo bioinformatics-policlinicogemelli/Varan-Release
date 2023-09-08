@@ -333,10 +333,10 @@ def get_combinedVariantOutput_from_folder(inputFolder, tsvpath):
 def walk_folder(input, output_folder, overwrite_output=False, vcf_type=None ,filter_snv=False, log=False):
     if not log:
         logger.remove()
-        logfile="Walk_folder_{time:HH-mm-ss.SS}.log"
+        logfile="Walk_folder_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")#,mode="w")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")#,mode="w")
     
     logger.info("Starting walk_folder script:")
     logger.info(f"walk_folder args [input:{input}, output_folder:{output_folder}, Overwrite:{overwrite_output}, vcf_type:{vcf_type}, filter_snv:{filter_snv}]")
@@ -516,10 +516,10 @@ if __name__ == '__main__':
         args = parser.parse_args()
     except Exception as err:
         logger.remove()
-        logfile="walk_{time:HH-mm-ss.SS}.log"
+        logfile="walk_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
         logger.critical(f"error: {err}", file=sys.stderr)
     
     

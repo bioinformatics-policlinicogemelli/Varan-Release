@@ -77,10 +77,10 @@ def filter_vf(df):
 def filter_main(folder, output_folder, vus, overwrite=False, log=False):
     if not log:
         logger.remove()
-        logfile="filter_main_{time:HH-mm-ss.SS}.log"
+        logfile="filter_main_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")#,mode="w")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")#,mode="w")
     
     logger.info("Starting filter_main script:")
     logger.info(f"filter_main args [maf_folder:{folder}, output_folder:{output_folder}, vus:{vus}, overwrite:{overwrite}]")
@@ -188,10 +188,10 @@ if __name__ == '__main__':
         args = parser.parse_args()
     except Exception as err:
         logger.remove()
-        logfile="filter_clinvar_{time:HH-mm-ss.SS}.log"
+        logfile="filter_clinvar_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
         logger.critical(f"error: {err}", file=sys.stderr)
   
     folder = args.folder

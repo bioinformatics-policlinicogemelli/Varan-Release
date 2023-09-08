@@ -3,9 +3,7 @@ import pandas as pd
 import argparse
 from configparser import ConfigParser
 
-# Lo script va eseguito dopo la creazione dei data
-
-def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir):
+def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     """
         Function to populate cases_sv file
     Args:
@@ -13,7 +11,11 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir):
         vus : Flag to select Vus inclusion
         cases_list_dir : path of case_list output dir
     """
-    data_sv=pd.read_csv(os.path.join(folder,"data_sv.txt"),sep="\t")
+    try:
+        data_sv=pd.read_csv(os.path.join(folder,"data_sv.txt"),sep="\t")
+    except pd.errors.EmptyDataError:
+        logger.error("data_sv.txt is empty, skipping this step!")
+        return
     nsamples=len(data_sv.Sample_Id.unique())
     sample_ids=list(data_sv.Sample_Id.unique())
     
@@ -44,7 +46,7 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir):
 #
 
 
-def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir):
+def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
     """
         Function to populate cases_cna file
     Args:
@@ -53,7 +55,12 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir):
         cases_list_dir : path of case_list output dir
     """
     
-    data_cna=pd.read_csv(os.path.join(folder,"data_cna.txt"),sep="\t")
+    try:
+        data_cna=pd.read_csv(os.path.join(folder,"data_cna.txt"),sep="\t")
+    except pd.errors.EmptyDataError:
+        logger.error("data_cna.txt is empty, skipping this step!")
+        return
+    
     nsamples=len(data_cna.columns)-1
     sample_ids=list(data_cna.columns)[1:]
     
@@ -81,12 +88,12 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir):
 
     case_cna_file = open(f"{cases_list_dir}/cases_cna.txt", "w")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=case_cna_file)
+        logger.info(f"{key}: {value}", file=case_cna_file)
     case_cna_file.close()
 
 
 
-def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir):
+def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,logger):
     """
         Function to populate cases_sequenced file
     Args:
@@ -95,7 +102,11 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir):
         cases_list_dir : path of case_list output dir
     """
 
-    data_sequenced=pd.read_csv(os.path.join(folder,"data_mutations_extended.txt"),sep="\t")
+    try:
+        data_sequenced=pd.read_csv(os.path.join(folder,"data_mutations_extended.txt"),sep="\t")
+    except pd.errors.EmptyDataError:
+        logger.error("data_mutations_extended.txt is empty, skipping this step!")
+        return
     nsamples=len(data_sequenced["Tumor_Sample_Barcode"].unique())
     sample_ids=list(data_sequenced["Tumor_Sample_Barcode"].unique())
 
@@ -145,8 +156,6 @@ if __name__=="__main__":
     cancer=args.Cancer
     
     config = ConfigParser()
-    # parse existing file
-    # read config file
     configFile = config.read("conf.ini")
     project=config.get("Project","PROJECT_NAME")
     project_name="_"+project

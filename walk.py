@@ -461,12 +461,12 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
     MSI_THR=config.get('MSI', 'THRESHOLD')
     TMB=ast.literal_eval(config.get('TMB', 'THRESHOLD'))
     for k, v in combined_dict.items():
-        logger.info(f"Reading MSI info in CombinedOutput file {v}...")
+        logger.info(f"Reading Tumor clinical parameters info in CombinedOutput file {v}...")
         try:
             tmv_msi = tsv.get_msi_tmb(v)
         except Exception as e:
             logger.error(f"Something went wrong!")
-        logger.info(f"MSI Values found: {tmv_msi}")
+        logger.info(f"Tumor clinical parameters Values found: {tmv_msi}")
         if float(tmv_msi['MSI'][0][1]) >= 40:
             table_dict_patient[k].append(tmv_msi['MSI'][1][1])   
         else:

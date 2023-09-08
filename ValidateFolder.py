@@ -110,10 +110,10 @@ def validateFolder(folder,log=False):
     
     if not log:
         logger.remove()
-        logfile="validateFolder_{time:HH-mm-ss.SS}.log"
+        logfile="validateFolder_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")#,mode="w")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")#,mode="w")
 	
     logger.info("Starting validateFolder script:")
     logger.info(f"validateFolder args [folder:{folder}]")
@@ -188,10 +188,10 @@ if __name__ == '__main__':
         args = parser.parse_args()
     except Exception as err:
         logger.remove()
-        logfile="validate_folder_{time:HH-mm-ss.SS}.log"
+        logfile="validate_folder_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
         logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
         logger.critical(f"error: {err}", file=sys.stderr)
     
     folder=args.Folder

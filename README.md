@@ -51,7 +51,6 @@ Argument of Varan script
 optional arguments:
 -h, --help show this help message and exit
 -c CANCER, --Cancer CANCER Cancer Name
--d, --Directory Add this argument if input is a folder
 -i INPUT, --input INPUT input folder tsv with data or tsv with path of data
 -f, --filter_snv Filter out from the vcf the variants wit dot (.) in Alt column
 -t {snv,cnv}, --vcf_type {snv,cnv} Select the vcf file to parse

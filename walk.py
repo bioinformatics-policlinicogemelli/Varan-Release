@@ -470,19 +470,19 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
             table_dict_patient[k].append('NA')
         table_dict_patient[k].append(tmv_msi['TMB_Total'])
 
-        if float(tmv_msi['MSI'][0][1]) < int(MSI_THR):
+        if float(tmv_msi['MSI'][0][1]) < float(MSI_THR):
             table_dict_patient[k].append("Stable")   
         else:
             table_dict_patient[k].append('Unstable')
 
-        TMB_values=list(TMB.values())
-        TMB_keys=list(TMB.keys())
-        if tmv_msi['TMB_Total'] <= TMB_values[0]:
-            table_dict_patient[k].append(TMB_keys[0])
-        elif tmv_msi['TMB_Total'] < TMB_values[1]:
-            table_dict_patient[k].append(TMB_keys[1])
-        elif tmv_msi['TMB_Total'] >= TMB_values[2]:
-            table_dict_patient[k].append(TMB_keys[2])
+        found = False
+        for _k, _v in TMB.items():
+            if float(tmv_msi["TMB_Total"])<=float(_v):
+                table_dict_patient[k].append(_k)
+                found=True
+        if found==False:
+            table_dict_patient[k].append(TMB.keys()[-1])
+
 
     write_clinical_sample(output_folder, table_dict_patient)
     

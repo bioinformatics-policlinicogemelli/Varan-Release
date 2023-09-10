@@ -32,31 +32,31 @@ def varan(args):
             ###########################
         
             logger.info("Starting filter") 
-            if args.vcf_type in ["snv",None]:
+            if args.vcf_type =="snv" or (args.vcf_type==None and os.path.exists(os.path.join(args.input,"SNV"))):
                 filter_main(args.output_folder, args.output_folder, args.vus,args.overWrite)
 
             ############################
             #      3. CONCATENATE      #
             ############################
-
-            logger.info("Concatenate mutation file")
-            folders=["NoBenign"]
-            if args.vus:
-                folders.append("NoVus")
+            if args.vcf_type =="snv" or (args.vcf_type==None and os.path.exists(os.path.join(args.input,"SNV"))):
+                logger.info("Concatenate mutation file")
+                folders=["NoBenign"]
+                if args.vus:
+                    folders.append("NoVus")
+                
+                for folder in folders:
+                    input_folder=os.path.join(args.output_folder,folder)
+                    output_file=os.path.join(input_folder,"data_mutations_extended.txt")
+                    concatenate_main(input_folder,"maf",output_file)
             
-            for folder in folders:
-                input_folder=os.path.join(args.output_folder,folder)
-                output_file=os.path.join(input_folder,"data_mutations_extended.txt")
-                concatenate_main(input_folder,"maf",output_file)
-        
-            if args.vus:
-                logger.info("Extracting data_mutations_extended from NoVUS folder") 
-                os.system("cp "+os.path.join(args.output_folder,os.path.join("NoVus","data_mutations_extended.txt"))+" "+ args.output_folder )
-            else:
-                logger.info("Extracting data_mutations_extended from NoBenign folder") 
-                os.system("cp "+os.path.join(args.output_folder,os.path.join("NoBenign","data_mutations_extended.txt"))+" "+ args.output_folder )
-            
-            
+                if args.vus:
+                    logger.info("Extracting data_mutations_extended from NoVUS folder") 
+                    os.system("cp "+os.path.join(args.output_folder,os.path.join("NoVus","data_mutations_extended.txt"))+" "+ args.output_folder )
+                else:
+                    logger.info("Extracting data_mutations_extended from NoBenign folder") 
+                    os.system("cp "+os.path.join(args.output_folder,os.path.join("NoBenign","data_mutations_extended.txt"))+" "+ args.output_folder )
+                
+                
             ###########################################
             #      4. MAKE AND POPULATE TABLES        #
             ###########################################

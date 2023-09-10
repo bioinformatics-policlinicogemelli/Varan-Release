@@ -5,16 +5,13 @@ import os
 import sys
 import argparse
 from loguru import logger 
-from configparser import ConfigParser
 from walk import walk_folder 
 from filter_clinvar import filter_main
 from concatenate import concatenate_main
 from ValidateFolder import validateFolderlog
 from Make_meta_and_cases import meta_case_main
-from Update_script import update_main 
-from Delete_script import delete_main 
-from ExtractSamples_script import extract_main
 
+@logger.catch()
 def varan(args):
     
     logger.info(f"Varan args [input:{args.input}, output_folder:{args.output_folder}, filter_snv:{args.filter_snv}, cancer:{args.Cancer}, \
@@ -79,6 +76,7 @@ def varan(args):
     ############################
 
     elif args.Update: 
+        from Update_script import update_main 
         logger.info("Starting Update study")
         update_main(args.Path,args.NewPath,args.output_folder)
 
@@ -87,6 +85,7 @@ def varan(args):
     ############################
 
     elif args.Remove:
+        from Delete_script import delete_main 
         logger.info("Starting Delete samples from study")  
         delete_main(args.Path,args.SampleList,args.output_folder)
 
@@ -95,6 +94,7 @@ def varan(args):
     ############################
 
     elif args.Extract:
+        from ExtractSamples_script import extract_main
         logger.info("Starting Extract samples from study")
         extract_main(args.Path,args.SampleList,args.output_folder)
 
@@ -105,13 +105,14 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)
 
-if __name__ == '__main__':
-	
+
+@logger.catch()
+def main(): 
     logger.remove()
     logfile="Varan_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
     logger.level("INFO", color="<green>")
-    logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True, catch=True)
-    logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+    logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True, catch=True, backtrace=True, diagnose=True)
+    logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w", backtrace=True, diagnose=True)
     logger.info("Welcome to VARAN")
 
     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Argument of Varan script')
@@ -139,7 +140,13 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--Path', required=False,help='Path of original study folder')
     
 
-    args = parser.parse_args()
+    try:
+        args = parser.parse_args()
+    except:
+        logger.critical("Output folder is required")
+        raise argparse.ArgumentError("Output folder is required")
+
+
     if args.Update and not all([args.Path,args.NewPath]):
         logger.critical("To update a study, you need to specify both original and new folder paths")
         raise argparse.ArgumentError("To update a study, you need to specify both old and new paths")
@@ -160,3 +167,6 @@ if __name__ == '__main__':
             raise argparse.ArgumentError("Input is required")
 
     varan(args)
+
+if __name__ == '__main__':
+    main()

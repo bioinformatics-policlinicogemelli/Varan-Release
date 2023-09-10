@@ -422,10 +422,7 @@ def walk_folder(input, output_folder, overwrite_output=False, vcf_type=None ,fil
         if not os.path.exists(fusion_table_file):
             logger.info(f"Creating data_sv.txt file...")
             fusion_table = open(fusion_table_file, 'w')
-            header = 'Sample_Id\tSV_Status\tClass\
-    \tSite1_Hugo_Symbol\
-    \tSite2_Hugo_Symbol\
-    \tNormal_Paired_End_Read_Count\tEvent_Info\tRNA_Support\n'
+            header = 'Sample_Id\tSV_Status\tClass\tSite1_Hugo_Symbol\tSite2_Hugo_Symbol\tNormal_Paired_End_Read_Count\tEvent_Info\tRNA_Support\n'
             fusion_table.write(header)
         else:
             fusion_table = open(fusion_table_file, 'a')

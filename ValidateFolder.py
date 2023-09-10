@@ -177,26 +177,26 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)  
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Parser of Update script for cBioportal')
+#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Parser of Update script for cBioportal')
 
-    parser.add_argument('-f', '--Folder', required=True,
-						help='Folder path to check')
+#     parser.add_argument('-f', '--Folder', required=True,
+# 						help='Folder path to check')
 
-    try:
-        args = parser.parse_args()
-    except Exception as err:
-        logger.remove()
-        logfile="validate_folder_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-        logger.critical(f"error: {err}", file=sys.stderr)
+#     try:
+#         args = parser.parse_args()
+#     except Exception as err:
+#         logger.remove()
+#         logfile="validate_folder_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
+#         logger.level("INFO", color="<green>")
+#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+#         logger.critical(f"error: {err}", file=sys.stderr)
     
-    folder=args.Folder
+#     folder=args.Folder
     
-    if not os.path.exists(folder):
-        print(["[WARNING] Folder not found"])
-    else:
-        validateFolder(folder,log=False)   
+#     if not os.path.exists(folder):
+#         print(["[WARNING] Folder not found"])
+#     else:
+#         validateFolder(folder,log=False)   

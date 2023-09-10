@@ -456,40 +456,40 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)
 
-if __name__=="__main__":
+# if __name__=="__main__":
     
-    parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='cBioportal arguments')
+#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='cBioportal arguments')
 
-    parser.add_argument('-c', '--Cancer', required=False,
-                        help='Cancer Name')
-    parser.add_argument('-v', '--VUS', required=False, action='store_true', default=False,
-                        help='Are VUS present?')
-    parser.add_argument('-o', '--Output', required=False,
-                        help='Output path')
+#     parser.add_argument('-c', '--Cancer', required=False,
+#                         help='Cancer Name')
+#     parser.add_argument('-v', '--VUS', required=False, action='store_true', default=False,
+#                         help='Are VUS present?')
+#     parser.add_argument('-o', '--Output', required=False,
+#                         help='Output path')
 
-    try:
-        args = parser.parse_args()
-    except Exception as err:
-        logger.remove()
-        logfile="make_meta_and_cases_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-        logger.critical(f"error: {err}", file=sys.stderr)
+#     try:
+#         args = parser.parse_args()
+#     except Exception as err:
+#         logger.remove()
+#         logfile="make_meta_and_cases_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
+#         logger.level("INFO", color="<green>")
+#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+#         logger.critical(f"error: {err}", file=sys.stderr)
   
-    cancer = args.Cancer
-    vus = args.VUS
-    output = args.Output
+#     cancer = args.Cancer
+#     vus = args.VUS
+#     output = args.Output
     
-    config = ConfigParser()
+#     config = ConfigParser()
 
-    # parse existing file
-    # read config file
-    configFile = config.read("conf.ini")
-    project=config.get("Project","PROJECT_NAME")
-    project_name="_"+project
-    description=config.get("Project","DESCRIPTION")
-    profile=config.get("Project","PROFILE")
+#     # parse existing file
+#     # read config file
+#     configFile = config.read("conf.ini")
+#     project=config.get("Project","PROJECT_NAME")
+#     project_name="_"+project
+#     description=config.get("Project","DESCRIPTION")
+#     profile=config.get("Project","PROFILE")
 
 
-    meta_case_main(cancer,vus,output,log=False)
+#     meta_case_main(cancer,vus,output,log=False)

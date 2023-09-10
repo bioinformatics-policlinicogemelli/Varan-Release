@@ -69,29 +69,29 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Concatenate several files maf froma a given folder')
+#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Concatenate several files maf froma a given folder')
     
-    parser.add_argument('-f', '--folder', required=True,
-                                            help='Path folder containing the maf files')
-    parser.add_argument('-e', '--extension', required=True,
-                                            help='Extension of the files to concatenate (eg. maf)')
-    parser.add_argument('-o', '--output_file', required=True,
-                                            help='Output txt file (eg data_mutations_extended.txt)')
+#     parser.add_argument('-f', '--folder', required=True,
+#                                             help='Path folder containing the maf files')
+#     parser.add_argument('-e', '--extension', required=True,
+#                                             help='Extension of the files to concatenate (eg. maf)')
+#     parser.add_argument('-o', '--output_file', required=True,
+#                                             help='Output txt file (eg data_mutations_extended.txt)')
 
-    try:
-        args = parser.parse_args()
-    except Exception as err:
-        logger.remove()
-        logfile="concatenate_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-        logger.critical(f"error: {err}", file=sys.stderr)
+#     try:
+#         args = parser.parse_args()
+#     except Exception as err:
+#         logger.remove()
+#         logfile="concatenate_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
+#         logger.level("INFO", color="<green>")
+#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+#         logger.critical(f"error: {err}", file=sys.stderr)
 
-    folder = args.folder
-    ext = args.extension
-    output_file = args.output_file
+#     folder = args.folder
+#     ext = args.extension
+#     output_file = args.output_file
 
-    concatenate_main(folder, ext, output_file, log=False)
+#     concatenate_main(folder, ext, output_file, log=False)

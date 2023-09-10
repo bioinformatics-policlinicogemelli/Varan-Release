@@ -111,35 +111,35 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)     
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     
-    logfile="ExtractSamples_Script_{time:HH:mm:ss.SS}.log"
-    logger.info("Let's see if we have everything we need...")
+#     logfile="ExtractSamples_Script_{time:HH:mm:ss.SS}.log"
+#     logger.info("Let's see if we have everything we need...")
  
     
-    parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Parser of Extract script for cBioportal')
-        # arguments
-    parser.add_argument('-o', '--OldDataPath', required=True,
-                            help='Folder containing old existing data files')
-    parser.add_argument('-s', '--SampleToExtract', required=True,
-                            help='Path of file with SampleIDs to extract')
-    parser.add_argument('-d', '--Destination', required=True,
-                            help='Path of new folder to store extracted data',default="./")
-    try:  
-        args = parser.parse_args()
-    except Exception as err:
-        logger.remove()
-        logfile="extract_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-        logger.critical(f"error: {err}", file=sys.stderr)
+#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Parser of Extract script for cBioportal')
+#         # arguments
+#     parser.add_argument('-o', '--OldDataPath', required=True,
+#                             help='Folder containing old existing data files')
+#     parser.add_argument('-s', '--SampleToExtract', required=True,
+#                             help='Path of file with SampleIDs to extract')
+#     parser.add_argument('-d', '--Destination', required=True,
+#                             help='Path of new folder to store extracted data',default="./")
+#     try:  
+#         args = parser.parse_args()
+#     except Exception as err:
+#         logger.remove()
+#         logfile="extract_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
+#         logger.level("INFO", color="<green>")
+#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+#         logger.critical(f"error: {err}", file=sys.stderr)
 
-    oldpath=args.OldDataPath
-    removepath=args.SampleToExtract
-    destinationfolder=args.Destination
+#     oldpath=args.OldDataPath
+#     removepath=args.SampleToExtract
+#     destinationfolder=args.Destination
 
-    extract_main(oldpath,removepath,destinationfolder,log=False)
+#     extract_main(oldpath,removepath,destinationfolder,log=False)
     
     
 

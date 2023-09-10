@@ -493,37 +493,37 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
          
-    parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Argument of walk script')
+#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Argument of walk script')
 
-    parser.add_argument('-i', '--input', required=True,
-                                            help='input folder with data')
-    parser.add_argument('-t', '--vcf_type', required=False,
-                                            choices=['snv', 'cnv'],
-                                            help='Select the vcf file to parse')
-    parser.add_argument('-f', '--filter_snv', required=False,
-                                            action='store_true',
-                                            help='Filter out from the vcf the variants wit dot (.) in Alt column')
-    parser.add_argument('-o', '--output_folder', required=True,
-                                            help='Output folder')
-    parser.add_argument('-w', '--overWrite', required=False,action='store_true',
-                                                help='Overwrite output folder if it exists')
-    try:
-        args = parser.parse_args()
-    except Exception as err:
-        logger.remove()
-        logfile="walk_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-        logger.critical(f"error: {err}", file=sys.stderr)
+#     parser.add_argument('-i', '--input', required=True,
+#                                             help='input folder with data')
+#     parser.add_argument('-t', '--vcf_type', required=False,
+#                                             choices=['snv', 'cnv'],
+#                                             help='Select the vcf file to parse')
+#     parser.add_argument('-f', '--filter_snv', required=False,
+#                                             action='store_true',
+#                                             help='Filter out from the vcf the variants wit dot (.) in Alt column')
+#     parser.add_argument('-o', '--output_folder', required=True,
+#                                             help='Output folder')
+#     parser.add_argument('-w', '--overWrite', required=False,action='store_true',
+#                                                 help='Overwrite output folder if it exists')
+#     try:
+#         args = parser.parse_args()
+#     except Exception as err:
+#         logger.remove()
+#         logfile="walk_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
+#         logger.level("INFO", color="<green>")
+#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+#         logger.critical(f"error: {err}", file=sys.stderr)
     
     
-    input = args.input
-    vcf_type = args.vcf_type
-    filter_snv = args.filter_snv
-    output_folder = args.output_folder
-    overwrite_output=args.overWrite
+#     input = args.input
+#     vcf_type = args.vcf_type
+#     filter_snv = args.filter_snv
+#     output_folder = args.output_folder
+#     overwrite_output=args.overWrite
     
-    walk_folder(input, output_folder, overwrite_output, vcf_type, filter_snv, log=False)
+#     walk_folder(input, output_folder, overwrite_output, vcf_type, filter_snv, log=False)

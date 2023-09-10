@@ -118,29 +118,29 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
         
-    parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Parser of Update script for cBioportal')
+#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Parser of Update script for cBioportal')
 
-    parser.add_argument('-o', '--OldDataPath', required=True,
-                        help='Folder containing old existing data files')
-    parser.add_argument('-n', '--NewDataPath', required=True,
-                        help='Path containing new data files to add to old ones')
-    parser.add_argument('-d', '--Destination', required=True,
-                        help='Path of new folder to store updated data',default="./")
+#     parser.add_argument('-o', '--OldDataPath', required=True,
+#                         help='Folder containing old existing data files')
+#     parser.add_argument('-n', '--NewDataPath', required=True,
+#                         help='Path containing new data files to add to old ones')
+#     parser.add_argument('-d', '--Destination', required=True,
+#                         help='Path of new folder to store updated data',default="./")
     
-    try:    
-        args = parser.parse_args()
-    except Exception as err:
-        logger.remove()
-        logfile="update_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-        logger.critical(f"error: {err}", file=sys.stderr)
+#     try:    
+#         args = parser.parse_args()
+#     except Exception as err:
+#         logger.remove()
+#         logfile="update_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
+#         logger.level("INFO", color="<green>")
+#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
+#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
+#         logger.critical(f"error: {err}", file=sys.stderr)
 
-    path=args.OldDataPath
-    newpath=args.NewDataPath
-    output=args.Destination
+#     path=args.OldDataPath
+#     newpath=args.NewDataPath
+#     output=args.Destination
 
-    update_main(path,newpath,output,log=False)
+#     update_main(path,newpath,output,log=False)

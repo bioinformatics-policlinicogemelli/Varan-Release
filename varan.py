@@ -31,8 +31,9 @@ def varan(args):
             #       2. FILTER         #
             ###########################
         
-            logger.info("Starting filter")    
-            filter_main(args.output_folder, args.output_folder, args.vus,args.overWrite)
+            logger.info("Starting filter") 
+            if args.vcf_type in ["snv",None]:
+                filter_main(args.output_folder, args.output_folder, args.vus,args.overWrite)
 
             ############################
             #      3. CONCATENATE      #

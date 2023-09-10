@@ -481,7 +481,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
                 table_dict_patient[k].append(_k)
                 found=True
         if found==False:
-            table_dict_patient[k].append(TMB.keys()[-1])
+            table_dict_patient[k].append(list(TMB.keys())[-1])
 
 
     write_clinical_sample(output_folder, table_dict_patient)

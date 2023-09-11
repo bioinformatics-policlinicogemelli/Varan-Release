@@ -61,7 +61,8 @@ def get_cnv_from_folder(inputFolderCNV):
             incorrect_files.append(cnv_vcf_files[i])
     if len(incorrect_files)!=0:
         logger.critical(f"It seems that the files \n{incorrect_files} \nare not CNV! Please check your CNV input data and try again.")
-        raise Exception("Error in get_cnv_from_folder script: exiting from walk script!")       
+        exit()
+        #raise Exception("Error in get_cnv_from_folder script: exiting from walk script!")       
     logger.info(f"#{len(cnv_vcf_files)} vcf files found in CNV folder")
     return cnv_vcf_files
 
@@ -145,7 +146,8 @@ def get_snv_from_folder(inputFolderSNV):
             incorrect_files.append(snv_vcf_files[i])
     if len(incorrect_files)!=0:
         logger.critical(f"It seems that the files \n{incorrect_files} \nare not SNV! Please check your SNV input data and try again.")
-        raise Exception("Error in get_snv_from_folder: exiting from walk script")   
+        exit()
+       # raise Exception("Error in get_snv_from_folder: exiting from walk script")   
     logger.info(f"#{len(snv_vcf_files)} vcf files found in SNV folder")
     return snv_vcf_files
 

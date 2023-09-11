@@ -19,12 +19,17 @@ def varan(args):
                             update:{args.Update}, extract:{args.Extract}, remove:{args.Remove}")
 
     if not any([args.Update ,args.Extract , args.Remove]) :       
+
+
             
             ###########################
             #        1.  WALK         #
             ###########################
             
             logger.info("Starting preparation study folder")
+            if not os.path.exists("./scratch"):
+                logger.info("Creating scratch dir")
+                os.mkdir("./scratch")
             walk_folder(args.input, args.output_folder, args.overWrite, args.vcf_type,args.filter_snv)
 
             ###########################

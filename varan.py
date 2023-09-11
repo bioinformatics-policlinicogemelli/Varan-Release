@@ -23,7 +23,7 @@ def varan(args):
             if not os.path.exists("./scratch"):
                 logger.info("Creating scratch dir")
                 os.mkdir("./scratch")
-            walk_folder(args.input, args.output_folder, args.overWrite, args.vcf_type,args.filter_snv)
+            output_folder=walk_folder(args.input, args.output_folder, args.overWrite, args.vcf_type,args.filter_snv)
 
             ###########################
             #       2. FILTER         #
@@ -31,7 +31,7 @@ def varan(args):
             from filter_clinvar import filter_main
             logger.info("Starting filter") 
             if args.vcf_type =="snv" or (args.vcf_type==None and os.path.exists(os.path.join(args.input,"SNV"))):
-                filter_main(args.output_folder, args.output_folder, args.filterVus,args.overWrite)
+                filter_main(args.output_folder, output_folder, args.filterVus,args.overWrite)
 
             ############################
             #      3. CONCATENATE      #
@@ -44,16 +44,16 @@ def varan(args):
                     folders.append("NoVus")
                 
                 for folder in folders:
-                    input_folder=os.path.join(args.output_folder,folder)
+                    input_folder=os.path.join(output_folder,folder)
                     output_file=os.path.join(input_folder,"data_mutations_extended.txt")
                     concatenate_main(input_folder,"maf",output_file)
             
                 if args.filterVus:
                     logger.info("Extracting data_mutations_extended from NoVUS folder") 
-                    os.system("cp "+os.path.join(args.output_folder,os.path.join("NoVus","data_mutations_extended.txt"))+" "+ args.output_folder )
+                    os.system("cp "+os.path.join(output_folder,os.path.join("NoVus","data_mutations_extended.txt"))+" "+ output_folder )
                 else:
                     logger.info("Extracting data_mutations_extended from NoBenign folder") 
-                    os.system("cp "+os.path.join(args.output_folder,os.path.join("NoBenign","data_mutations_extended.txt"))+" "+ args.output_folder )
+                    os.system("cp "+os.path.join(output_folder,os.path.join("NoBenign","data_mutations_extended.txt"))+" "+ output_folder )
                 
                 
             ###########################################
@@ -61,7 +61,7 @@ def varan(args):
             ###########################################
             from Make_meta_and_cases import meta_case_main
             logger.info("It's time to create tables!")
-            meta_case_main(args.Cancer,args.filterVus,args.output_folder)
+            meta_case_main(args.Cancer,args.filterVus,output_folder)
 
             
             ############################
@@ -69,7 +69,7 @@ def varan(args):
             ############################
             from ValidateFolder import validateFolderlog
             logger.info("Starting Validation Folder")
-            validateFolderlog(args.output_folder)
+            validateFolderlog(output_folder)
             logger.success("The end! The study is ready to be uploaded on cBioportal")
         
     ############################

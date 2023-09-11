@@ -30,6 +30,7 @@ def delete_main(oldpath,removepath,destinationfolder,overwrite,log=False):
         if os.path.exists(output):
             logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")
             shutil.rmtree(output)
+            os.mkdir(output)
     elif os.path.exists(output):
         logger.critical("Filtered_data folder already exists. Please change destination folder (--Destination arg)" )
         logger.critical("Exit")

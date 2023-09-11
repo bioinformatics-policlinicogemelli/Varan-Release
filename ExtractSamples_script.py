@@ -5,9 +5,9 @@ from ExtractSamples_functions import *
 from ValidateFolder import validateFolderlog
 import loguru
 from loguru import logger
+import shutil
 
-
-def extract_main(oldpath,removepath,outputfolder,log=False):
+def extract_main(oldpath,removepath,outputfolder,overwrite,log=False):
   
     if not log:
         logger.remove()
@@ -25,16 +25,20 @@ def extract_main(oldpath,removepath,outputfolder,log=False):
         logger.info("Sample list to extract found")
     
     output=os.path.join(outputfolder,"extracted_data")
-    if os.path.exists(output):
+    
+    if overwrite:
+        if os.path.exists(output):
+            logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")
+            shutil.rmtree(output)
+    elif os.path.exists(output):
         logger.critical("Extracted_data folder already exists. Please change destination folder (--Destination arg)" )
         logger.critical("Exit")
         sys.exit()
-    else: 
-        logger.info("Creating a new folder: Extracted_data")     
+    else:
+        logger.info("Creating a new folder: filtered_data")    
         os.mkdir(output)
         output_caseslists=os.path.join(output,"case_lists")
-        os.mkdir(output_caseslists)   
-
+        os.mkdir(output_caseslists) 
 
     logger.info("Great! Everything is ready to start")
 

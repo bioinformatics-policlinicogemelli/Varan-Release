@@ -93,7 +93,7 @@ def varan(args):
     elif args.Remove:
         from Delete_script import delete_main 
         logger.info("Starting Delete samples from study")  
-        delete_main(args.Path,args.SampleList,args.output_folder)
+        delete_main(args.Path,args.SampleList,args.output_folder,args.overWrite)
 
     ############################
     #         EXTRACT          #
@@ -102,7 +102,7 @@ def varan(args):
     elif args.Extract:
         from ExtractSamples_script import extract_main
         logger.info("Starting Extract samples from study")
-        extract_main(args.Path,args.SampleList,args.output_folder)
+        extract_main(args.Path,args.SampleList,args.output_folder,args.overWrite)
 
 #################################################################################################################
 

@@ -56,7 +56,7 @@ def extract_clinical_patient(oldpath,sample_ids,output_folder):
     patient_ids=list(sample[sample["Sample Identifier"].astype(str).isin(sample_ids)]["#Patient Identifier"])
     header=file.loc[0:3,:]
     extracted=file[file["#Patient Identifier"].astype(str).isin(patient_ids)]
-    if not all([sample in file["Sample Identifier"].unique() for sample in sample_ids]):
+    if not all([patient in file["#Patient Identifier"].unique() for patient in patient_ids]):
         print("[Warning] Some samples names are not present in the DataFrame data_clinical_patient.")
     extracted=pd.concat([header,extracted])    
     extracted.to_csv(os.path.join(output_folder,"data_clinical_patient.txt"),index=False,

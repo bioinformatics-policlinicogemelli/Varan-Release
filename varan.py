@@ -31,7 +31,7 @@ def varan(args):
             from filter_clinvar import filter_main
             logger.info("Starting filter") 
             if args.vcf_type =="snv" or (args.vcf_type==None and os.path.exists(os.path.join(args.input,"SNV"))):
-                filter_main(args.output_folder, output_folder, args.filterVus,args.overWrite)
+                filter_main(output_folder, output_folder, args.filterVus,args.overWrite)
 
             ############################
             #      3. CONCATENATE      #

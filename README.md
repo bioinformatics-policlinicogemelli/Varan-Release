@@ -44,6 +44,8 @@ To test the installation and check if everything works, launch the main script <
 cd <varan_folder_path>/varan-2.0
 python varan.py -h
 ```
+⚠️ <i>Depending on the python version it may be necessary to use pip3 instead of pip</i><br><be>
+
 If everything works, you will see a printed output like this:
 ```
 1:04:09.32 | INFO | Welcome to VARAN usage: varan.py [-h] [-c CANCER] [-d] [-i INPUT] [-f] [-t {snv,cnv}] [-w] [-v] [-u] [-n NEWPATH] [-r] [-e] -o OUTPUT_FOLDER [-s SAMPLELIST] [-p PATH]

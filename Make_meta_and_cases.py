@@ -50,6 +50,7 @@ def create_meta_study(cancer, project_name,vus, description, output_dir):
     logger.info("Writing meta_study.txt file...")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
+        print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -80,6 +81,7 @@ def create_meta_clinical_patient(cancer,project_name, vus, output_dir):
     logger.info("Writing meta_clinical_patient.txt file...")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
+        print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -110,6 +112,7 @@ def create_meta_clinical_sample(cancer,project_name, vus, output_dir):
     logger.info("Writing meta_clinical_sample.txt file...")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
+        print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -154,6 +157,7 @@ def create_meta_mutations(cancer, project_name,vus, profile, output_dir):
     logger.info("Writing meta_mutations_extended.txt file...")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
+        print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -196,6 +200,7 @@ def create_meta_sv(cancer,project_name, vus, output_dir):
     logger.info("Writing meta_sv.txt file...")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
+        print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -238,6 +243,7 @@ def create_meta_cna(cancer,project_name, vus, output_dir):
     logger.info("Writing meta_cna.txt file...")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
+        print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
@@ -274,6 +280,7 @@ def create_meta_cna_hg19(cancer,project_name, vus, output_dir):
     logger.info("Writing meta_cna_hg19_seg.txt file...")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
+        print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 

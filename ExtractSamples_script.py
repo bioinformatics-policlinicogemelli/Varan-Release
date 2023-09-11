@@ -31,6 +31,8 @@ def extract_main(oldpath,removepath,outputfolder,overwrite,log=False):
             logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")
             shutil.rmtree(output)
             os.mkdir(output)
+            output_caseslists=os.path.join(output,"case_lists")
+            os.mkdir(output_caseslists)  
     elif os.path.exists(output):
         logger.critical("Extracted_data folder already exists. Please change destination folder (--Destination arg)" )
         logger.critical("Exit")

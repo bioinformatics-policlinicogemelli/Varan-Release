@@ -480,6 +480,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
             if float(tmv_msi["TMB_Total"])<=float(_v):
                 table_dict_patient[k].append(_k)
                 found=True
+                break
         if found==False:
             table_dict_patient[k].append(list(TMB.keys())[-1])
 

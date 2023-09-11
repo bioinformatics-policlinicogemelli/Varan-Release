@@ -25,7 +25,7 @@ def extract_clinical_samples(file_path,sample_ids,output_folder):
     header=file.loc[0:3,:]
     file=pd.read_csv(file_path,sep="\t")
     extracted=file[file["Sample Identifier"].astype(str).isin(sample_ids)]
-    if len(sample_ids) > len(file["Sample Identifier"].unique()):
+    if not all(sample_ids in file["Sample Identifier"].unique()):
         print("[Warning] Some samples names are not present in the DataFrame data_clinical_samples.")
     extracted=pd.concat([header,extracted])
     extracted.to_csv(os.path.join(output_folder,"data_clinical_sample.txt"),index=False,
@@ -56,7 +56,7 @@ def extract_clinical_patient(oldpath,sample_ids,output_folder):
     patient_ids=list(sample[sample["Sample Identifier"].astype(str).isin(sample_ids)]["#Patient Identifier"])
     header=file.loc[0:3,:]
     extracted=file[file["#Patient Identifier"].astype(str).isin(patient_ids)]
-    if len(sample_ids) > len(file["#Patient Identifier"].unique()):
+    if not all(sample_ids in file["#Patient Identifier"].unique()):
         print("[Warning] Some samples names are not present in the DataFrame data_clinical_patient.")
     extracted=pd.concat([header,extracted])    
     extracted.to_csv(os.path.join(output_folder,"data_clinical_patient.txt"),index=False,
@@ -89,7 +89,7 @@ def extract_cna_hg19(file_path,sample_ids,output_folder):
 
     file=pd.read_csv(file_path,sep="\t")
     extracted=file[file["ID"].astype(str).isin(sample_ids)]
-    if len(sample_ids) > len(file["ID"].unique()):
+    if not all(sample_ids in file["ID"].unique()):
         print("[Warning] Some samples names are not present in the DataFrame data_cna_hg19.")
     extracted.to_csv(os.path.join(output_folder,"data_cna_hg19.seg"),index=False,
                    sep="\t")
@@ -117,7 +117,7 @@ def extract_cna(file_path,sample_ids,output_folder):
     """
     file=pd.read_csv(file_path,sep="\t")
     columns_to_keep = [sample for sample in sample_ids if sample in file.columns]
-    if len(sample_ids)> len(sample_ids):
+    if not all(sample_ids in file.columns):
         print("[Warning] Some samples names are not present in the DataFrame data_cna.")
     columns_to_keep.insert(0, file.columns[0])
     extracted=file.loc[:,columns_to_keep]
@@ -148,7 +148,7 @@ def extract_mutations(file_path,sample_ids,output_folder):
     
     file=pd.read_csv(file_path,sep="\t")
     extracted=file[file["Tumor_Sample_Barcode"].astype(str).isin(sample_ids)]
-    if len(sample_ids) > len(file["Tumor_Sample_Barcode"].unique()):
+    if not all(sample_ids in file["Tumor_Sample_Barcode"].unique()):
         print("[Warning] Some samples names are not present in the DataFrame data_mutations_extended .")
     extracted.to_csv(os.path.join(output_folder,"data_mutations_extended.txt"),index=False,
                    sep="\t")

@@ -1,6 +1,7 @@
 # cBioportal metafile
 import argparse
 import os
+import re
 from configparser import ConfigParser
 from populate_case_lists import populate_cases_cna,populate_cases_sequenced,populate_cases_sv
 from loguru import logger
@@ -17,16 +18,16 @@ def create_meta_study(cancer, project_name,vus, description, output_dir):
         output_dir : path of output dir
     """
 
+    version="_v"+str(re.search(r'_v(\d+)$', output_dir).group(1))
     if vus:
-        study_id = cancer+"_"+project_name+"_vus"
+        study_id = cancer+"_"+project_name+version+"_NoVus"
     else:
-        study_id = cancer+"_"+project_name
+        study_id = cancer+"_"+project_name+version
 
     if vus:
-        name = cancer.capitalize()+" Cancer ("+project_name.upper()+") VUS"
+        name = cancer.capitalize()+" Cancer ("+project_name.upper()+")"+version+ "_NoVus"
     else:
-        name = cancer.capitalize()+" Cancer ("+project_name.upper()+")"
-
+        name = cancer.capitalize()+" Cancer ("+project_name.upper()+")"+version
     add_global_case_list = "true"
 
     if description == " ":
@@ -60,11 +61,11 @@ def create_meta_clinical_patient(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-
+    version="_v"+str(re.search(r'_v(\d+)$', output_dir).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     alteration_type = "CLINICAL"
     datatype = "PATIENT_ATTRIBUTES"
@@ -90,11 +91,11 @@ def create_meta_clinical_sample(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-
+    version="_v"+str(re.search(r'_v(\d+)$', output_dir).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     alteration_type = "CLINICAL"
     datatype = "SAMPLE_ATTRIBUTES"
@@ -121,11 +122,11 @@ def create_meta_mutations(cancer, project_name,vus, profile, output_dir):
         profile: Description to overwrite default description
         output_dir : path of output dir
     """
-
+    version="_v"+str(re.search(r'_v(\d+)$', output_dir).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     alteration_type = "MUTATION_EXTENDED"
     datatype = "MAF"
@@ -164,11 +165,11 @@ def create_meta_sv(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-
+    version="_v"+str(re.search(r'_v(\d+)$', output_dir).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     alteration_type = "STRUCTURAL_VARIANT"
     datatype = "SV"
@@ -206,11 +207,11 @@ def create_meta_cna(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-
+    version="_v"+str(re.search(r'_v(\d+)$', output_dir).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     alteration_type = "COPY_NUMBER_ALTERATION"
     datatype = "DISCRETE"
@@ -248,10 +249,11 @@ def create_meta_cna_hg19(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
+    version="_v"+str(re.search(r'_v(\d+)$', output_dir).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     alteration_type = "COPY_NUMBER_ALTERATION"
     datatype = "SEG"
@@ -275,112 +277,112 @@ def create_meta_cna_hg19(cancer,project_name, vus, output_dir):
     meta_file.close()
 
 
-def create_cases_sequenced(cancer, vus, cases_list_dir):
-    """
-        Function to cases_sequenced
-    Args:
-        cancer : cancer type
-        vus : Flag to select Vus inclusion
-        cases_list_dir : path of case_list output dir
-    """
+# def create_cases_sequenced(cancer, vus, cases_list_dir):
+#     """
+#         Function to cases_sequenced
+#     Args:
+#         cancer : cancer type
+#         vus : Flag to select Vus inclusion
+#         cases_list_dir : path of case_list output dir
+#     """
 
-    if vus:
-        study_id = cancer+project_name+"_vus"
-    else:
-        study_id = cancer+project_name
+#     if vus:
+#         study_id = cancer+project_name+"_NoVus"
+#     else:
+#         study_id = cancer+project_name
 
-    stable_id = study_id+"_sequenced"
+#     stable_id = study_id+"_sequenced"
 
-    case_list_category = "all_cases_with_mutation_data"
-    case_list_name = "Sequenced Tumors"
-    case_list_description = "All sequenced samples (   samples)"
-    case_list_ids = " "
+#     case_list_category = "all_cases_with_mutation_data"
+#     case_list_name = "Sequenced Tumors"
+#     case_list_description = "All sequenced samples (   samples)"
+#     case_list_ids = " "
 
-    dictionary_file = {
-        "cancer_study_identifier": study_id,
-        "stable_id": stable_id,
-        "case_list_category": case_list_category,
-        "case_list_name": case_list_name,
-        "case_list_description": case_list_description,
-        "case_list_ids": case_list_ids,
-    }
+#     dictionary_file = {
+#         "cancer_study_identifier": study_id,
+#         "stable_id": stable_id,
+#         "case_list_category": case_list_category,
+#         "case_list_name": case_list_name,
+#         "case_list_description": case_list_description,
+#         "case_list_ids": case_list_ids,
+#     }
 
-    meta_file = open(f"{cases_list_dir}/cases_sequenced.txt", "w")
-    for key, value in dictionary_file.items():
-        logger.info(f"{key}: {value}", file=meta_file)
-    meta_file.close()
+#     meta_file = open(f"{cases_list_dir}/cases_sequenced.txt", "w")
+#     for key, value in dictionary_file.items():
+#         logger.info(f"{key}: {value}", file=meta_file)
+#     meta_file.close()
 
 
-def create_cases_cna(cancer, vus, cases_list_dir):
-    """
-        Function to cases_cna
-    Args:
-        cancer : cancer type
-        vus : Flag to select Vus inclusion
-        cases_list_dir : path of case_list output dir
-    """
+# def create_cases_cna(cancer, vus, cases_list_dir):
+#     """
+#         Function to cases_cna
+#     Args:
+#         cancer : cancer type
+#         vus : Flag to select Vus inclusion
+#         cases_list_dir : path of case_list output dir
+#     """
 
-    if vus:
-        study_id = cancer+project_name+"_vus"
-    else:
-        study_id = cancer+project_name
+#     if vus:
+#         study_id = cancer+project_name+"_vus"
+#     else:
+#         study_id = cancer+project_name
 
-    stable_id = study_id+"_cna"
+#     stable_id = study_id+"_cna"
 
-    case_list_category = "all_cases_with_cna_data"
-    case_list_name = "Samples with CNA data"
-    case_list_description = "Samples with CNA data (   samples)"
-    case_list_ids = " "
+#     case_list_category = "all_cases_with_cna_data"
+#     case_list_name = "Samples with CNA data"
+#     case_list_description = "Samples with CNA data (   samples)"
+#     case_list_ids = " "
 
-    dictionary_file = {
-        "cancer_study_identifier": study_id,
-        "stable_id": stable_id,
-        "case_list_category": case_list_category,
-        "case_list_name": case_list_name,
-        "case_list_description": case_list_description,
-        "case_list_ids": case_list_ids,
-    }
+#     dictionary_file = {
+#         "cancer_study_identifier": study_id,
+#         "stable_id": stable_id,
+#         "case_list_category": case_list_category,
+#         "case_list_name": case_list_name,
+#         "case_list_description": case_list_description,
+#         "case_list_ids": case_list_ids,
+#     }
 
-    meta_file = open(f"{cases_list_dir}/cases_cna.txt", "w")
-    for key, value in dictionary_file.items():
-        logger.info(f"{key}: {value}", file=meta_file)
-    meta_file.close()
+#     meta_file = open(f"{cases_list_dir}/cases_cna.txt", "w")
+#     for key, value in dictionary_file.items():
+#         logger.info(f"{key}: {value}", file=meta_file)
+#     meta_file.close()
     
 
 
-def create_cases_sv(cancer, vus,cases_list_dir):
-    """
-        Function to cases_sv
-    Args:
-        cancer : cancer type
-        vus : Flag to select Vus inclusion
-        cases_list_dir : path of case_list output dir
-    """
+# def create_cases_sv(cancer, vus,cases_list_dir):
+#     """
+#         Function to cases_sv
+#     Args:
+#         cancer : cancer type
+#         vus : Flag to select Vus inclusion
+#         cases_list_dir : path of case_list output dir
+#     """
 
-    if vus:
-        study_id = cancer+project_name+"_vus"
-    else:
-        study_id = cancer+project_name
+#     if vus:
+#         study_id = cancer+project_name+"_vus"
+#     else:
+#         study_id = cancer+project_name
 
-    stable_id = study_id+"_sv"
-    case_list_name = "Samples with SV data"
-    case_list_description = "All samples ( ) samples"
-    case_list_category = "all_cases_with_sv_data"
-    case_list_ids = " "
+#     stable_id = study_id+"_sv"
+#     case_list_name = "Samples with SV data"
+#     case_list_description = "All samples ( ) samples"
+#     case_list_category = "all_cases_with_sv_data"
+#     case_list_ids = " "
 
-    dictionary_file = {
-        "cancer_study_identifier": study_id,
-        "stable_id": stable_id,
-        "case_list_name": case_list_name,
-        "case_list_description": case_list_description,
-        "case_list_category": case_list_category,
-        "case_list_ids": case_list_ids,
-    }
+#     dictionary_file = {
+#         "cancer_study_identifier": study_id,
+#         "stable_id": stable_id,
+#         "case_list_name": case_list_name,
+#         "case_list_description": case_list_description,
+#         "case_list_category": case_list_category,
+#         "case_list_ids": case_list_ids,
+#     }
 
-    meta_file = open(f"{cases_list_dir}/cases_sv.txt", "w")
-    for key, value in dictionary_file.items():
-        logger.info(f"{key}: {value}", file=meta_file)
-    meta_file.close()
+#     meta_file = open(f"{cases_list_dir}/cases_sv.txt", "w")
+#     for key, value in dictionary_file.items():
+#         logger.info(f"{key}: {value}", file=meta_file)
+#     meta_file.close()
 
 
 

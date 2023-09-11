@@ -224,25 +224,46 @@ def run_vcf2maf(cl):
         else:
             logger.error(sout.stderr.decode('ascii').replace('ERROR: ',''))
     
-def create_folder(output_folder,overwrite_output):
-    if overwrite_output:
-        if os.path.exists(output_folder):
-            logger.warning(f"It seems that the folder '{output_folder}' already exists. Start removing process...")
-            shutil.rmtree(output_folder)
+
     
-    if not os.path.exists(output_folder):
-        logger.info(f"Creating the output folder '{output_folder}' in {os.getcwd()}...")
-        os.mkdir(output_folder)
-        maf_path = os.path.join(output_folder, 'maf')
-        os.mkdir(maf_path)
-        filtered_path = os.path.join(output_folder, 'snv_filtered')
-        os.mkdir(filtered_path)
-        logger.info(f"The folder '{output_folder}' was correctly created!")
+def find_version(filename,output_folder):
+    return int(filename.replace(output_folder+"_v",""))
 
-    else:
-        logger.critical(f"The folder '{output_folder}' already exists. To overwrite an existing folder add the -w option!")
-        raise(Exception('Error in create_folder script: exiting from walk script!'))
 
+
+def create_folder(output_folder,overwrite_output):
+    version="_v1"
+    output_folder_version=output_folder+version
+    if overwrite_output:
+        if os.path.exists(output_folder_version):
+            logger.warning(f"It seems that the folder '{output_folder_version}' already exists. Start removing process...")
+            correcInput=True
+            while correcInput:
+                res=input("Are you sure to delete the study? (Yes/No) ")
+                if res.lower()=="yes":
+                    shutil.rmtree(output_folder_version)
+                    correcInput=False
+                elif res.lower()=="no":
+                    correcInput=False
+                    logger.info("Please change name of output folder")
+                    exit()
+                else:
+                    continue
+    if os.path.exists(output_folder_version):
+        old_versions=[file for file in os.listdir() if output_folder in file and "_v" in file]
+        if len(old_versions)>0: 
+            old_versions_number=list(map(lambda x: find_version(x,output_folder),old_versions))
+            version="_v"+str(max(old_versions_number)+1)
+            output_folder_version=output_folder+version
+    logger.info(f"Creating the output folder '{output_folder_version}' in {os.getcwd()}...")
+    os.mkdir(output_folder_version)
+    maf_path = os.path.join(output_folder_version, 'maf')
+    os.mkdir(maf_path)
+    filtered_path = os.path.join(output_folder_version, 'snv_filtered')
+    os.mkdir(filtered_path)
+    logger.info(f"The folder '{output_folder_version}' was correctly created!")
+    return output_folder_version
+    
 def get_table_from_folder(tsvpath):
     table_dict = dict()
     file=pd.read_csv(tsvpath,sep="\t",index_col=False, dtype=str)
@@ -351,7 +372,7 @@ def walk_folder(input, output_folder, overwrite_output=False, vcf_type=None ,fil
     ###       OUTPUT FOLDER     ###
     ###############################
  
-    create_folder(output_folder,overwrite_output)
+    output_folder=create_folder(output_folder,overwrite_output)
  
     if os.path.exists(inputFolderCNV) and vcf_type!="snv":
         logger.info("Check CNV files...")

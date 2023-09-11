@@ -5,27 +5,20 @@ import os
 import sys
 import argparse
 from loguru import logger 
-from walk import walk_folder 
-from filter_clinvar import filter_main
-from concatenate import concatenate_main
-from ValidateFolder import validateFolderlog
-from Make_meta_and_cases import meta_case_main
 
 @logger.catch()
 def varan(args):
     
     logger.info(f"Varan args [input:{args.input}, output_folder:{args.output_folder}, filter_snv:{args.filter_snv}, cancer:{args.Cancer}, \
-                            vcf_type:{args.vcf_type}, overwrite_output:{args.overWrite}, vus:{args.vus}], \
+                            vcf_type:{args.vcf_type}, overwrite_output:{args.overWrite}, vus:{args.filterVus}], \
                             update:{args.Update}, extract:{args.Extract}, remove:{args.Remove}")
 
     if not any([args.Update ,args.Extract , args.Remove]) :       
-
-
-            
+             
             ###########################
             #        1.  WALK         #
             ###########################
-            
+            from walk import walk_folder
             logger.info("Starting preparation study folder")
             if not os.path.exists("./scratch"):
                 logger.info("Creating scratch dir")
@@ -35,18 +28,19 @@ def varan(args):
             ###########################
             #       2. FILTER         #
             ###########################
-        
+            from filter_clinvar import filter_main
             logger.info("Starting filter") 
             if args.vcf_type =="snv" or (args.vcf_type==None and os.path.exists(os.path.join(args.input,"SNV"))):
-                filter_main(args.output_folder, args.output_folder, args.vus,args.overWrite)
+                filter_main(args.output_folder, args.output_folder, args.filterVus,args.overWrite)
 
             ############################
             #      3. CONCATENATE      #
             ############################
+            from concatenate import concatenate_main
             if args.vcf_type =="snv" or (args.vcf_type==None and os.path.exists(os.path.join(args.input,"SNV"))):
                 logger.info("Concatenate mutation file")
                 folders=["NoBenign"]
-                if args.vus:
+                if args.filterVus:
                     folders.append("NoVus")
                 
                 for folder in folders:
@@ -54,7 +48,7 @@ def varan(args):
                     output_file=os.path.join(input_folder,"data_mutations_extended.txt")
                     concatenate_main(input_folder,"maf",output_file)
             
-                if args.vus:
+                if args.filterVus:
                     logger.info("Extracting data_mutations_extended from NoVUS folder") 
                     os.system("cp "+os.path.join(args.output_folder,os.path.join("NoVus","data_mutations_extended.txt"))+" "+ args.output_folder )
                 else:
@@ -65,14 +59,15 @@ def varan(args):
             ###########################################
             #      4. MAKE AND POPULATE TABLES        #
             ###########################################
-
+            from Make_meta_and_cases import meta_case_main
             logger.info("It's time to create tables!")
-            meta_case_main(args.Cancer,args.vus,args.output_folder)
+            meta_case_main(args.Cancer,args.filterVus,args.output_folder)
 
             
             ############################
             #      5. VALIDATION       #
             ############################
+            from ValidateFolder import validateFolderlog
             logger.info("Starting Validation Folder")
             validateFolderlog(args.output_folder)
             logger.success("The end! The study is ready to be uploaded on cBioportal")
@@ -131,7 +126,7 @@ def main():
     parser.add_argument('-w', '--overWrite', required=False,action='store_true',help='Overwrite output folder if it exists')
 
     # FILTER_CLINVAR BLOCK
-    parser.add_argument('-v', '--vus', required=False,action='store_true', help='Filter out VUS variants')
+    parser.add_argument('-v', '--filterVus', required=False,action='store_true', help='Filter out VUS variants')
     # UPDATE BLOCK
     parser.add_argument('-u', '--Update', required=False,action='store_true',help='Add this argument if you want to concatenate two studies')
     parser.add_argument('-n', '--NewPath', required=False,help='Path of new study folder to add')  

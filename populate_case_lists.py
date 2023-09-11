@@ -1,7 +1,9 @@
 import os
+import re
 import pandas as pd
 import argparse
 from configparser import ConfigParser
+
 
 def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     """
@@ -19,10 +21,11 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     nsamples=len(data_sv.Sample_Id.unique())
     sample_ids=list(data_sv.Sample_Id.unique())
     
+    version="_v"+str(re.search(r'_v(\d+)$', folder).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     stable_id = study_id+"_sv"
     case_list_name = "Samples with SV data"
@@ -64,11 +67,11 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
     nsamples=len(data_cna.columns)-1
     sample_ids=list(data_cna.columns)[1:]
     
-    
+    version="_v"+str(re.search(r'_v(\d+)$', folder).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     stable_id = study_id+"_cna"
 
@@ -110,11 +113,11 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,log
     nsamples=len(data_sequenced["Tumor_Sample_Barcode"].unique())
     sample_ids=list(data_sequenced["Tumor_Sample_Barcode"].unique())
 
-    
+    version="_v"+str(re.search(r'_v(\d+)$', folder).group(1))
     if vus:
-        study_id = cancer+project_name+"_vus"
+        study_id = cancer+project_name+version+"_NoVus"
     else:
-        study_id = cancer+project_name
+        study_id = cancer+project_name+version
 
     stable_id = study_id+"_sequenced"
 

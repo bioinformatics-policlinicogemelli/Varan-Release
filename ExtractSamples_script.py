@@ -17,7 +17,7 @@ def extract_main(oldpath,removepath,outputfolder,log=False):
         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
     
     logger.info("Starting extract_main script:")
-    logger.info(f"extract_main args [oldpath:{oldpath}, removepath:{removepath}, destinationfolder:{destinationfolder}]")	
+    logger.info(f"extract_main args [oldpath:{oldpath}, removepath:{removepath}, destinationfolder:{outputfolder}]")	
     
     if os.path.exists(oldpath):
         logger.info("Original folder found")

@@ -5,7 +5,7 @@ import re
 from configparser import ConfigParser
 from populate_case_lists import populate_cases_cna,populate_cases_sequenced,populate_cases_sv
 from loguru import logger
-from versioning import get_version_from_foldername
+from versioning import extract_version_str
 import sys
 
 
@@ -19,7 +19,7 @@ def create_meta_study(cancer, project_name,vus, description, output_dir):
         output_dir : path of output dir
     """
 
-    version=get_version_from_foldername(output_dir)
+    version=extract_version_str(output_dir)
     if vus:
         study_id = cancer+"_"+project_name+version+"_NoVus"
     else:
@@ -63,7 +63,7 @@ def create_meta_clinical_patient(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=get_version_from_foldername(output_dir)
+    version=extract_version_str(output_dir)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -94,7 +94,7 @@ def create_meta_clinical_sample(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=get_version_from_foldername(output_dir)
+    version=extract_version_str(output_dir)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -126,7 +126,7 @@ def create_meta_mutations(cancer, project_name,vus, profile, output_dir):
         profile: Description to overwrite default description
         output_dir : path of output dir
     """
-    version=get_version_from_foldername(output_dir)
+    version=extract_version_str(output_dir)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -170,7 +170,7 @@ def create_meta_sv(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=get_version_from_foldername(output_dir)
+    version=extract_version_str(output_dir)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -213,7 +213,7 @@ def create_meta_cna(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=get_version_from_foldername(output_dir)
+    version=extract_version_str(output_dir)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -256,7 +256,7 @@ def create_meta_cna_hg19(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=get_version_from_foldername(output_dir)
+    version=extract_version_str(output_dir)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:

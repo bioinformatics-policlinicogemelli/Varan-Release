@@ -9,7 +9,7 @@ import loguru
 from loguru import logger
 import shutil
 
-def extract_main(oldpath,removepath,outputfolder,overwrite):
+def extract_main(oldpath,removepath,outputfolder):
 
     logger.info("Starting extract_main script:")
     logger.info(f"extract_main args [oldpath:{oldpath}, removepath:{removepath}, destinationfolder:{outputfolder}]")	

@@ -155,34 +155,3 @@ def main(INPUT, OUTPUT, SAMPLE, MODE):
 	vcf_to_table(INPUT, OUTPUT, SAMPLE, MODE)
 	vcf_to_table_fc(INPUT, OUTPUT, SAMPLE, MODE)
 
-# if __name__ == '__main__':
-
-# 	# parse arguments
-# 	parser = argparse.ArgumentParser(description="Get a vcf file, generate a table",
-# 											epilog="Version: 1.0\n\
-# 											Author: Luciano Giaco'\n\
-# 											email: luciano.giaco@policlinicogemelli.it")
-
-#     # arguments
-# 	parser.add_argument('-i', '--input', help="<input.vcf>\
-# 											VCF file for CNV",
-# 											required=True)
-# 	parser.add_argument('-o', '--output', help="<output-file.tab>\
-# 											file path of the Table output",
-# 											required=True)
-
-# 	parser.add_argument('-s', '--sample', help="<sample name>\
-# 											Name of the sample",
-# 											required=True)
-# 	parser.add_argument('-m', '--mode', help="Select the writing mode: write or append",
-# 											choices=['w', 'a'],
-# 											default='w')
-
-
-# 	args = parser.parse_args()
-# 	INPUT = args.input
-# 	OUTPUT = args.output
-# 	SAMPLE = args.sample
-# 	MODE = args.mode
-
-# 	main(INPUT, OUTPUT, SAMPLE, MODE)

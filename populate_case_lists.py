@@ -141,30 +141,3 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,log
     meta_file.close()
 
 
-# if __name__=="__main__":
-    
-#     parser = argparse.ArgumentParser(description='cBioportal arguments')
-#     # arguments    
-#     parser.add_argument('-f', '--Folder', required=False, 
-#                         help='Path of folder containing data')
-#     parser.add_argument('-c', '--Cancer', required=False,
-#                         help='Cancer Name')
-#     parser.add_argument('-v', '--VUS', required=False, action='store_true', default=False,
-#                         help='Are VUS present?')
-
-#     args = parser.parse_args()
-    
-#     folder=args.Folder
-#     vus = args.VUS
-#     cancer=args.Cancer
-    
-#     config = ConfigParser()
-#     configFile = config.read("conf.ini")
-#     project=config.get("Project","PROJECT_NAME")
-#     project_name="_"+project
-    
-#     cases_list_dir = os.path.join(folder, "case_lists")
-#     if os.path.exists(cases_list_dir):
-#         pass
-#     else:
-#         os.mkdir(cases_list_dir)

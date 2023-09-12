@@ -5,7 +5,7 @@ from Update_functions import *
 import loguru
 from loguru import logger
 from ValidateFolder import validateFolderlog
-from versioning import create_newest_version_folder,extract_version_int
+from versioning import create_newest_version_folder,extract_version_int, get_newest_version
 
 
 def update_main(path,newpath,output):
@@ -99,9 +99,3 @@ def update_main(path,newpath,output):
 
     logger.success("The process ended without errors")
     logger.success("Successfully updated study!")
-        
-class MyArgumentParser(argparse.ArgumentParser):
-  """An argument parser that raises an error, instead of quits"""
-  def error(self, message):
-    raise ValueError(message)
-

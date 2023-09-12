@@ -5,16 +5,10 @@ from Update_functions import *
 import loguru
 from loguru import logger
 from ValidateFolder import validateFolderlog
+from versioning import create_newest_version_folder,extract_version_int
 
 
-def update_main(path,newpath,output,log=False):
-    
-    if not log:
-        logger.remove()
-        logfile="update_main_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
+def update_main(path,newpath,output):
     
     logger.info("Starting update_main script:")
     logger.info(f"update_main args [oldpath:{path}, newpath:{newpath}, output_folder:{output}]")	
@@ -24,19 +18,12 @@ def update_main(path,newpath,output,log=False):
 
     if os.path.exists(newpath):
         logger.info("New folder found")
-    
 
-    output=output+"_updated_data"
-    
-    if os.path.exists(output):
-        logger.critical("Updated_data folder for this study already exists. Please change destination folder (--Destination arg)" )
-        logger.critical("Exit")
-        sys.exit()
-    else:    
-        logger.info("Creating a new folder: updated_data")
-        os.mkdir(output)
-        output_caseslists=os.path.join(output,"case_lists")
-        os.mkdir(output_caseslists)   
+    outputupdate=output+"_updated_data"
+    logger.info(f"Creating a new folder: {output}")
+    output=create_newest_version_folder(outputupdate)
+    output_caseslists=os.path.join(output,"case_lists")
+    os.mkdir(output_caseslists)   
 
     logger.info("Great! Everything is ready to start")      
 
@@ -118,29 +105,3 @@ class MyArgumentParser(argparse.ArgumentParser):
   def error(self, message):
     raise ValueError(message)
 
-# if __name__ == '__main__':
-        
-#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Parser of Update script for cBioportal')
-
-#     parser.add_argument('-o', '--OldDataPath', required=True,
-#                         help='Folder containing old existing data files')
-#     parser.add_argument('-n', '--NewDataPath', required=True,
-#                         help='Path containing new data files to add to old ones')
-#     parser.add_argument('-d', '--Destination', required=True,
-#                         help='Path of new folder to store updated data',default="./")
-    
-#     try:    
-#         args = parser.parse_args()
-#     except Exception as err:
-#         logger.remove()
-#         logfile="update_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-#         logger.level("INFO", color="<green>")
-#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-#         logger.critical(f"error: {err}", file=sys.stderr)
-
-#     path=args.OldDataPath
-#     newpath=args.NewDataPath
-#     output=args.Destination
-
-#     update_main(path,newpath,output,log=False)

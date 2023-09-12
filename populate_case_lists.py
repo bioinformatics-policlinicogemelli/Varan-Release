@@ -3,7 +3,7 @@ import re
 import pandas as pd
 import argparse
 from configparser import ConfigParser
-
+from versioning import get_version_from_foldername
 
 def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     """
@@ -21,7 +21,7 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     nsamples=len(data_sv.Sample_Id.unique())
     sample_ids=list(data_sv.Sample_Id.unique())
     
-    version="_v"+str(re.search(r'_v(\d+)$', folder).group(1))
+    version=get_version_from_foldername(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -67,7 +67,7 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
     nsamples=len(data_cna.columns)-1
     sample_ids=list(data_cna.columns)[1:]
     
-    version="_v"+str(re.search(r'_v(\d+)$', folder).group(1))
+    version=get_version_from_foldername(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -113,7 +113,7 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,log
     nsamples=len(data_sequenced["Tumor_Sample_Barcode"].unique())
     sample_ids=list(data_sequenced["Tumor_Sample_Barcode"].unique())
 
-    version="_v"+str(re.search(r'_v(\d+)$', folder).group(1))
+    version=get_version_from_foldername(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -141,30 +141,30 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,log
     meta_file.close()
 
 
-if __name__=="__main__":
+# if __name__=="__main__":
     
-    parser = argparse.ArgumentParser(description='cBioportal arguments')
-    # arguments    
-    parser.add_argument('-f', '--Folder', required=False, 
-                        help='Path of folder containing data')
-    parser.add_argument('-c', '--Cancer', required=False,
-                        help='Cancer Name')
-    parser.add_argument('-v', '--VUS', required=False, action='store_true', default=False,
-                        help='Are VUS present?')
+#     parser = argparse.ArgumentParser(description='cBioportal arguments')
+#     # arguments    
+#     parser.add_argument('-f', '--Folder', required=False, 
+#                         help='Path of folder containing data')
+#     parser.add_argument('-c', '--Cancer', required=False,
+#                         help='Cancer Name')
+#     parser.add_argument('-v', '--VUS', required=False, action='store_true', default=False,
+#                         help='Are VUS present?')
 
-    args = parser.parse_args()
+#     args = parser.parse_args()
     
-    folder=args.Folder
-    vus = args.VUS
-    cancer=args.Cancer
+#     folder=args.Folder
+#     vus = args.VUS
+#     cancer=args.Cancer
     
-    config = ConfigParser()
-    configFile = config.read("conf.ini")
-    project=config.get("Project","PROJECT_NAME")
-    project_name="_"+project
+#     config = ConfigParser()
+#     configFile = config.read("conf.ini")
+#     project=config.get("Project","PROJECT_NAME")
+#     project_name="_"+project
     
-    cases_list_dir = os.path.join(folder, "case_lists")
-    if os.path.exists(cases_list_dir):
-        pass
-    else:
-        os.mkdir(cases_list_dir)
+#     cases_list_dir = os.path.join(folder, "case_lists")
+#     if os.path.exists(cases_list_dir):
+#         pass
+#     else:
+#         os.mkdir(cases_list_dir)

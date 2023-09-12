@@ -6,7 +6,6 @@ version = "1.0"
 
 import os
 import ast
-import argparse
 import subprocess
 import vcf2tab_cnv
 import vcf_filter
@@ -17,8 +16,8 @@ import shutil
 from loguru import logger 
 import random
 import string
-import sys
 import traceback
+from versioning import get_newest_version
 
 config = ConfigParser()
 
@@ -225,36 +224,12 @@ def run_vcf2maf(cl):
             logger.error(sout.stderr.decode('ascii').replace('ERROR: ',''))
     
 
-    
-def find_version(filename,output_folder):
-    return int(filename.replace(output_folder+"_v",""))
-
-
-
-def create_folder(output_folder,overwrite_output):
+def create_folder(output_folder):
     version="_v1"
     output_folder_version=output_folder+version
-    if overwrite_output:
-        if os.path.exists(output_folder_version):
-            logger.warning(f"It seems that the folder '{output_folder_version}' already exists. Start removing process...")
-            correcInput=True
-            while correcInput:
-                res=input("Are you sure to delete the study? (Yes/No) ")
-                if res.lower()=="yes":
-                    shutil.rmtree(output_folder_version)
-                    correcInput=False
-                elif res.lower()=="no":
-                    correcInput=False
-                    logger.info("Please change name of output folder")
-                    exit()
-                else:
-                    continue
     if os.path.exists(output_folder_version):
-        old_versions=[file for file in os.listdir() if output_folder in file and "_v" in file]
-        if len(old_versions)>0: 
-            old_versions_number=list(map(lambda x: find_version(x,output_folder),old_versions))
-            version="_v"+str(max(old_versions_number)+1)
-            output_folder_version=output_folder+version
+        logger.warning(f"It seems that the folder '{output_folder_version}' already exists.")
+        output_folder_version=get_newest_version(output_folder)
     logger.info(f"Creating the output folder '{output_folder_version}' in {os.getcwd()}...")
     os.mkdir(output_folder_version)
     maf_path = os.path.join(output_folder_version, 'maf')
@@ -353,17 +328,11 @@ def get_combinedVariantOutput_from_folder(inputFolder, tsvpath):
         combined_dict[sampleID] = combined_path
     return combined_dict
 
-def walk_folder(input, output_folder, overwrite_output=False, vcf_type=None ,filter_snv=False, log=False):
-    if not log:
-        logger.remove()
-        logfile="Walk_folder_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")#,mode="w")
-    
+def walk_folder(input, output_folder,  vcf_type=None ,filter_snv=False): #overwrite_output=False,
+
     logger.info("Starting walk_folder script:")
-    logger.info(f"walk_folder args [input:{input}, output_folder:{output_folder}, Overwrite:{overwrite_output}, vcf_type:{vcf_type}, filter_snv:{filter_snv}]")
- 
+    logger.info(f"walk_folder args [input:{input}, output_folder:{output_folder},vcf_type:{vcf_type}, filter_snv:{filter_snv}]")
+    # Overwrite:{overwrite_output}, 
     config.read('conf.ini')
     inputFolderSNV=os.path.abspath(os.path.join(input,"SNV"))
     inputFolderCNV=os.path.abspath(os.path.join(input,"CNV"))
@@ -372,7 +341,7 @@ def walk_folder(input, output_folder, overwrite_output=False, vcf_type=None ,fil
     ###       OUTPUT FOLDER     ###
     ###############################
  
-    output_folder=create_folder(output_folder,overwrite_output)
+    output_folder=create_folder(output_folder) #,overwrite_output
  
     if os.path.exists(inputFolderCNV) and vcf_type!="snv":
         logger.info("Check CNV files...")
@@ -409,7 +378,6 @@ def walk_folder(input, output_folder, overwrite_output=False, vcf_type=None ,fil
     logger.info("Clearing scratch folder...")
     clear_scratch()
     
-
     ###############################
     ###       GET FUSION        ###
     ###############################
@@ -509,45 +477,5 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
 
 
     write_clinical_sample(output_folder, table_dict_patient)
-    return output_folder
     logger.success("Walk script completed!\n")
-
-class MyArgumentParser(argparse.ArgumentParser):
-  """An argument parser that raises an error, instead of quits"""
-  def error(self, message):
-    raise ValueError(message)
-
-# if __name__ == '__main__':
-         
-#     parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Argument of walk script')
-
-#     parser.add_argument('-i', '--input', required=True,
-#                                             help='input folder with data')
-#     parser.add_argument('-t', '--vcf_type', required=False,
-#                                             choices=['snv', 'cnv'],
-#                                             help='Select the vcf file to parse')
-#     parser.add_argument('-f', '--filter_snv', required=False,
-#                                             action='store_true',
-#                                             help='Filter out from the vcf the variants wit dot (.) in Alt column')
-#     parser.add_argument('-o', '--output_folder', required=True,
-#                                             help='Output folder')
-#     parser.add_argument('-w', '--overWrite', required=False,action='store_true',
-#                                                 help='Overwrite output folder if it exists')
-#     try:
-#         args = parser.parse_args()
-#     except Exception as err:
-#         logger.remove()
-#         logfile="walk_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-#         logger.level("INFO", color="<green>")
-#         logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True,catch=True)
-#         logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w")
-#         logger.critical(f"error: {err}", file=sys.stderr)
-    
-    
-#     input = args.input
-#     vcf_type = args.vcf_type
-#     filter_snv = args.filter_snv
-#     output_folder = args.output_folder
-#     overwrite_output=args.overWrite
-    
-#     walk_folder(input, output_folder, overwrite_output, vcf_type, filter_snv, log=False)
+    return output_folder

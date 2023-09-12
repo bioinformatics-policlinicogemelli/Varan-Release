@@ -7,14 +7,7 @@ import loguru
 from loguru import logger
 import shutil
 
-def delete_main(oldpath,removepath,destinationfolder,overwrite,log=False):
-    
-    if not log:
-        logger.remove()
-        logfile="delete_main_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
+def delete_main(oldpath,removepath,destinationfolder):
     
     logger.info("Starting delete_main script:")
     logger.info(f"delete_main args [oldpath:{oldpath}, removepath:{removepath}, destinationfolder:{destinationfolder}]")	
@@ -26,13 +19,14 @@ def delete_main(oldpath,removepath,destinationfolder,overwrite,log=False):
         logger.info("Sample list to remove found")
     
     output=destinationfolder+"_filtered_data"
-    if overwrite:
-        if os.path.exists(output):
-            logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")
-            shutil.rmtree(output)
-            os.mkdir(output)
-            output_caseslists=os.path.join(output,"case_lists")
-            os.mkdir(output_caseslists)   
+    
+    #if overwrite:
+    if os.path.exists(output):
+        logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")
+        shutil.rmtree(output)
+        os.mkdir(output)
+        output_caseslists=os.path.join(output,"case_lists")
+        os.mkdir(output_caseslists)   
 
     elif os.path.exists(output):
         logger.critical("Filtered_data folder already exists. Please change destination folder (--Destination arg)" )

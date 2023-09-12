@@ -10,9 +10,9 @@ from loguru import logger
 def varan(args):
     
     logger.info(f"Varan args [input:{args.input}, output_folder:{args.output_folder}, filter_snv:{args.filter_snv}, cancer:{args.Cancer}, \
-                            vcf_type:{args.vcf_type}, overwrite_output:{args.overWrite}, vus:{args.filterVus}], \
+                            vcf_type:{args.vcf_type},  vus:{args.filterVus}], \
                             update:{args.Update}, extract:{args.Extract}, remove:{args.Remove}")
-
+    #overwrite_output:{args.overWrite},
     if not any([args.Update ,args.Extract , args.Remove]) :       
              
             ###########################
@@ -23,15 +23,15 @@ def varan(args):
             if not os.path.exists("./scratch"):
                 logger.info("Creating scratch dir")
                 os.mkdir("./scratch")
-            output_folder=walk_folder(args.input, args.output_folder, args.overWrite, args.vcf_type,args.filter_snv)
-
+            output_folder=walk_folder(args.input, args.output_folder,  args.vcf_type,args.filter_snv)
+            #args.overWrite,
             ###########################
             #       2. FILTER         #
             ###########################
             from filter_clinvar import filter_main
             logger.info("Starting filter") 
             if args.vcf_type =="snv" or (args.vcf_type==None and os.path.exists(os.path.join(args.input,"SNV"))):
-                filter_main(output_folder, output_folder, args.filterVus,args.overWrite)
+                filter_main(output_folder, output_folder, args.filterVus) #args.overWrite
 
             ############################
             #      3. CONCATENATE      #
@@ -88,7 +88,7 @@ def varan(args):
     elif args.Remove:
         from Delete_script import delete_main 
         logger.info("Starting Delete samples from study")  
-        delete_main(args.Path,args.SampleList,args.output_folder,args.overWrite)
+        delete_main(args.Path,args.SampleList,args.output_folder) #args.overWrite
 
     ############################
     #         EXTRACT          #
@@ -97,7 +97,7 @@ def varan(args):
     elif args.Extract:
         from ExtractSamples_script import extract_main
         logger.info("Starting Extract samples from study")
-        extract_main(args.Path,args.SampleList,args.output_folder,args.overWrite)
+        extract_main(args.Path,args.SampleList,args.output_folder) #args.overWrite
 
 #################################################################################################################
 
@@ -123,7 +123,7 @@ def main():
     parser.add_argument('-i', '--input', required=False, help='input folder tsv with data or tsv with path of data')
     parser.add_argument('-f', '--filter_snv', required=False,action='store_true',help='Filter out from the vcf the variants wit dot (.) in Alt column')
     parser.add_argument('-t', '--vcf_type', required=False, choices=['snv', 'cnv'],help='Select the vcf file to parse')
-    parser.add_argument('-w', '--overWrite', required=False,action='store_true',help='Overwrite output folder if it exists')
+    # parser.add_argument('-w', '--overWrite', required=False,action='store_true',help='Overwrite output folder if it exists')
 
     # FILTER_CLINVAR BLOCK
     parser.add_argument('-v', '--filterVus', required=False,action='store_true', help='Filter out VUS variants')

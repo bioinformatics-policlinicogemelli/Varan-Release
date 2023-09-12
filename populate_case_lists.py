@@ -3,7 +3,7 @@ import re
 import pandas as pd
 import argparse
 from configparser import ConfigParser
-from versioning import get_version_from_foldername
+from versioning import extract_version_str
 
 def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     """
@@ -21,7 +21,7 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     nsamples=len(data_sv.Sample_Id.unique())
     sample_ids=list(data_sv.Sample_Id.unique())
     
-    version=get_version_from_foldername(folder)
+    version=extract_version_str(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -67,7 +67,7 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
     nsamples=len(data_cna.columns)-1
     sample_ids=list(data_cna.columns)[1:]
     
-    version=get_version_from_foldername(folder)
+    version=extract_version_str(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -113,7 +113,7 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,log
     nsamples=len(data_sequenced["Tumor_Sample_Barcode"].unique())
     sample_ids=list(data_sequenced["Tumor_Sample_Barcode"].unique())
 
-    version=get_version_from_foldername(folder)
+    version=extract_version_str(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:

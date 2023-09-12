@@ -26,7 +26,7 @@ def update_main(path,newpath,output,log=False):
         logger.info("New folder found")
     
 
-    output=os.path.join(output,"updated_data")
+    output=output+"_updated_data"
     
     if os.path.exists(output):
         logger.critical("Updated_data folder for this study already exists. Please change destination folder (--Destination arg)" )

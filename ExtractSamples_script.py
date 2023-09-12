@@ -24,7 +24,8 @@ def extract_main(oldpath,removepath,outputfolder,overwrite,log=False):
     if os.path.exists(removepath):
         logger.info("Sample list to extract found")
     
-    output=os.path.join(outputfolder,"extracted_data")
+    
+    output=outputfolder+"_extracted_data"
     
     if overwrite:
         if os.path.exists(output):
@@ -87,7 +88,6 @@ def extract_main(oldpath,removepath,outputfolder,overwrite,log=False):
         extract_sv(o_sv,sampleIds,output)
     else:
         logger.warning("data_sv.txt not found in current folder. Skipping")
-    #
     
     #
     o_cases_cna=os.path.join(oldpath,"case_lists/cases_cna.txt")

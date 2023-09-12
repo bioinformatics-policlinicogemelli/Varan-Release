@@ -25,7 +25,7 @@ def delete_main(oldpath,removepath,destinationfolder,overwrite,log=False):
     if os.path.exists(removepath):
         logger.info("Sample list to remove found")
     
-    output=os.path.join(destinationfolder,"filtered_data")
+    output=destinationfolder+"_filtered_data"
     if overwrite:
         if os.path.exists(output):
             logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")

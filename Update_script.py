@@ -98,7 +98,7 @@ def update_main(path,newpath,output):
 
 
     cancer,vus=extract_info_from_meta(path)
-    meta_case_main(cancer,vus,version)
+    meta_case_main(cancer,vus,output)
 
     validateFolderlog(output)
 

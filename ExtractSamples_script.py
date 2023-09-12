@@ -20,7 +20,7 @@ def extract_main(oldpath,removepath,outputfolder):
         logger.info("Sample list to extract found")
     
     
-    output=create_newest_version_folder(output)
+    output=create_newest_version_folder(outputfolder)
     logger.info(f"Creating a new folder: {output}")
     output_caseslists=os.path.join(output,"case_lists")
     os.mkdir(output_caseslists)   

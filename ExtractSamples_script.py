@@ -3,20 +3,13 @@ import sys
 import argparse
 from ExtractSamples_functions import *
 from ValidateFolder import validateFolderlog
-from versioning import get_newest_version
+from versioning import get_newest_version,create_newest_version_folder
 import loguru
 from loguru import logger
 import shutil
 
-def extract_main(oldpath,removepath,outputfolder,overwrite,log=False):
-  
-    if not log:
-        logger.remove()
-        logfile="extract_main_{time:YYYY-MM-DD_HH-mm-ss.SS}.log"
-        logger.level("INFO", color="<green>")
-        logger.add(sys.stderr, format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",colorize=True)
-        logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}")
-    
+def extract_main(oldpath,removepath,outputfolder,overwrite):
+
     logger.info("Starting extract_main script:")
     logger.info(f"extract_main args [oldpath:{oldpath}, removepath:{removepath}, destinationfolder:{outputfolder}]")	
     
@@ -26,24 +19,10 @@ def extract_main(oldpath,removepath,outputfolder,overwrite,log=False):
         logger.info("Sample list to extract found")
     
     
-    output=outputfolder+"_extracted_data"
-    
-    if overwrite:
-        if os.path.exists(output):
-            logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")
-            shutil.rmtree(output)
-            os.mkdir(output)
-            output_caseslists=os.path.join(output,"case_lists")
-            os.mkdir(output_caseslists)  
-    elif os.path.exists(output):
-        logger.critical("Extracted_data folder already exists. Please change destination folder (--Destination arg)" )
-        logger.critical("Exit")
-        sys.exit()
-    else:
-        logger.info("Creating a new folder: filtered_data")    
-        os.mkdir(output)
-        output_caseslists=os.path.join(output,"case_lists")
-        os.mkdir(output_caseslists) 
+    output=create_newest_version_folder(output)
+    logger.info(f"Creating a new folder: {output}")
+    output_caseslists=os.path.join(output,"case_lists")
+    os.mkdir(output_caseslists)   
 
     logger.info("Great! Everything is ready to start")
 
@@ -113,9 +92,4 @@ def extract_main(oldpath,removepath,outputfolder,overwrite,log=False):
     validateFolderlog(output)
     logger.success("The process ended without errors")
     logger.success("Successfully extracted sample(s)!")
-        
-class MyArgumentParser(argparse.ArgumentParser):
-  """An argument parser that raises an error, instead of quits"""
-  def error(self, message):
-    raise ValueError(message)     
 

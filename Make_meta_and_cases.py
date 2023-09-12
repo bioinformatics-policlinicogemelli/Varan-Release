@@ -1,15 +1,12 @@
 # cBioportal metafile
-import argparse
 import os
-import re
 from configparser import ConfigParser
 from populate_case_lists import populate_cases_cna,populate_cases_sequenced,populate_cases_sv
 from loguru import logger
 from versioning import extract_version_str
-import sys
 
 
-def create_meta_study(cancer, project_name,vus, description, output_dir):
+def create_meta_study(cancer, project_name,vus, description, output_dir,version):
     """
         Function to create meta_study_file
     Args:
@@ -18,8 +15,7 @@ def create_meta_study(cancer, project_name,vus, description, output_dir):
         description : optional description to overwrite default description
         output_dir : path of output dir
     """
-
-    version=extract_version_str(output_dir)
+    
     if vus:
         study_id = cancer+"_"+project_name+version+"_NoVus"
     else:
@@ -49,13 +45,14 @@ def create_meta_study(cancer, project_name,vus, description, output_dir):
 
     meta_file = open(f"{output_dir}/meta_study.txt", "w")
     logger.info("Writing meta_study.txt file...")
+    
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=meta_file)
         print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 
 
-def create_meta_clinical_patient(cancer,project_name, vus, output_dir):
+def create_meta_clinical_patient(cancer,project_name, vus, output_dir,version):
     """
         Function to create meta_clinical_patient
     Args:
@@ -63,7 +60,7 @@ def create_meta_clinical_patient(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=extract_version_str(output_dir)
+
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -86,7 +83,7 @@ def create_meta_clinical_patient(cancer,project_name, vus, output_dir):
     meta_file.close()
 
 
-def create_meta_clinical_sample(cancer,project_name, vus, output_dir):
+def create_meta_clinical_sample(cancer,project_name, vus, output_dir,version):
     """
         Function to create meta_clinical_sample
     Args:
@@ -94,7 +91,7 @@ def create_meta_clinical_sample(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=extract_version_str(output_dir)
+
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -117,7 +114,7 @@ def create_meta_clinical_sample(cancer,project_name, vus, output_dir):
     meta_file.close()
 
 
-def create_meta_mutations(cancer, project_name,vus, profile, output_dir):
+def create_meta_mutations(cancer, project_name,vus, profile, output_dir,version):
     """
         Function to create meta_mutations
     Args:
@@ -126,7 +123,7 @@ def create_meta_mutations(cancer, project_name,vus, profile, output_dir):
         profile: Description to overwrite default description
         output_dir : path of output dir
     """
-    version=extract_version_str(output_dir)
+
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -162,7 +159,7 @@ def create_meta_mutations(cancer, project_name,vus, profile, output_dir):
     meta_file.close()
 
 
-def create_meta_sv(cancer,project_name, vus, output_dir):
+def create_meta_sv(cancer,project_name, vus, output_dir,version):
     """
         Function to create meta_sv
     Args:
@@ -170,7 +167,7 @@ def create_meta_sv(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=extract_version_str(output_dir)
+    
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -205,7 +202,7 @@ def create_meta_sv(cancer,project_name, vus, output_dir):
     meta_file.close()
 
 
-def create_meta_cna(cancer,project_name, vus, output_dir):
+def create_meta_cna(cancer,project_name, vus, output_dir,version):
     """
         Function to create meta_cna
     Args:
@@ -213,7 +210,7 @@ def create_meta_cna(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=extract_version_str(output_dir)
+
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -248,7 +245,7 @@ def create_meta_cna(cancer,project_name, vus, output_dir):
     meta_file.close()
 
 
-def create_meta_cna_hg19(cancer,project_name, vus, output_dir):
+def create_meta_cna_hg19(cancer,project_name, vus, output_dir,version):
     """
         Function to create meta_cna_hg19
     Args:
@@ -256,7 +253,7 @@ def create_meta_cna_hg19(cancer,project_name, vus, output_dir):
         vus : Flag to select Vus inclusion
         output_dir : path of output dir
     """
-    version=extract_version_str(output_dir)
+    
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -306,41 +303,42 @@ def meta_case_main(cancer,vus,output_folder):
     else:
         os.mkdir(cases_list_dir)
 
+    version=extract_version_str(output_folder)
     ###########  METAFILE FUNCTIONS ###########
     
-    create_meta_study(cancer,project, vus, description, output_folder)
+    create_meta_study(cancer,project, vus, description, output_folder,version)
     
     if os.path.exists(os.path.join(output_folder,"data_clinical_patient.txt")):
-        create_meta_clinical_patient(cancer, project_name,vus, output_folder)
+        create_meta_clinical_patient(cancer, project_name,vus, output_folder,version)
         logger.info("meta_clinical_patient.txt created!")
     if os.path.exists(os.path.join(output_folder,"data_clinical_sample.txt")):
-        create_meta_clinical_sample(cancer,project_name, vus, output_folder)
+        create_meta_clinical_sample(cancer,project_name, vus, output_folder,version)
         logger.info("meta_clinical_sample.txt created!")
     if os.path.exists(os.path.join(os.path.join(output_folder,"data_mutations_extended.txt"))):
-        create_meta_mutations(cancer,project_name, vus, profile, output_folder)
+        create_meta_mutations(cancer,project_name, vus, profile, output_folder,version)
         logger.info("meta_mutations_extended.txt created!")
     if os.path.exists(os.path.join(os.path.join(output_folder,"data_sv.txt"))):
-        create_meta_sv(cancer,project_name, vus, output_folder)
+        create_meta_sv(cancer,project_name, vus, output_folder,version)
         logger.info("meta_sv.txt created!")
     if os.path.exists(os.path.join(output_folder,"data_cna.txt")):
-        create_meta_cna(cancer,project_name, vus, output_folder)
+        create_meta_cna(cancer,project_name, vus, output_folder,version)
         logger.info("meta_cna.txt created!")
     if os.path.exists(os.path.join(output_folder,"data_cna_hg19.seg")):
-        create_meta_cna_hg19(cancer, project_name,vus, output_folder)
+        create_meta_cna_hg19(cancer, project_name,vus, output_folder,version)
         logger.info("meta_cna_hg19.txt created!")
 
     ########### CASE LIST FUNCTION ###########
 
     if os.path.exists(os.path.join(output_folder,"data_mutations_extended.txt")):
-        populate_cases_sequenced(cancer,project_name, vus, output_folder,cases_list_dir,logger)
+        populate_cases_sequenced(cancer,project_name, vus, output_folder,cases_list_dir,version,logger)
     else: logger.warning("data_mutations_extended.txt file not found!")
     
     if os.path.exists(os.path.join(output_folder,"data_cna.txt")):
-        populate_cases_cna(cancer, project_name,vus,output_folder, cases_list_dir,logger)
+        populate_cases_cna(cancer, project_name,vus,output_folder, cases_list_dir,version,logger)
     else: logger.warning("data_cna.txt file not found!")
     
     if os.path.exists(os.path.join(output_folder,"data_sv.txt")):
-        populate_cases_sv(cancer,project_name, vus, output_folder,cases_list_dir,logger)
+        populate_cases_sv(cancer,project_name, vus, output_folder,cases_list_dir,version,logger)
     else: logger.warning("data_sv.txt file not found!")
 
     logger.success("Make_meta_and_cases script completed!")

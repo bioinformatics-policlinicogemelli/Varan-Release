@@ -5,8 +5,8 @@ from Update_functions import *
 import loguru
 from loguru import logger
 from ValidateFolder import validateFolderlog
-from versioning import create_newest_version_folder,extract_version_int, get_newest_version
-
+from versioning import create_newest_version_folder,extract_version_str, extract_info_from_meta  
+from Make_meta_and_cases import meta_case_main
 
 def update_main(path,newpath,output):
     
@@ -18,10 +18,10 @@ def update_main(path,newpath,output):
 
     if os.path.exists(newpath):
         logger.info("New folder found")
-
-    outputupdate=output+"_updated_data"
+     
+    output=create_newest_version_folder(output)
+    version=extract_version_str(output)
     logger.info(f"Creating a new folder: {output}")
-    output=create_newest_version_folder(outputupdate)
     output_caseslists=os.path.join(output,"case_lists")
     os.mkdir(output_caseslists)   
 
@@ -94,6 +94,11 @@ def update_main(path,newpath,output):
         logger.warning("cases_sv.txt not found in 'case_lists' folders. Skipping")
 
     logger.info("Starting Validation Folder...")
+
+
+
+    cancer,vus=extract_info_from_meta(path)
+    meta_case_main(cancer,vus,version)
 
     validateFolderlog(output)
 

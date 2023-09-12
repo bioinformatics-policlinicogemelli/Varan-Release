@@ -3,7 +3,7 @@ import sys
 import argparse
 from Delete_functions import *
 from ValidateFolder import validateFolderlog
-from versioning import get_newest_version
+from versioning import get_newest_version,create_newest_version_folder
 import loguru
 from loguru import logger
 import shutil
@@ -20,25 +20,11 @@ def delete_main(oldpath,removepath,destinationfolder):
     if os.path.exists(removepath):
         logger.info("Sample list to remove found")
     
-    output=destinationfolder+"_filtered_data"
     
-    #if overwrite:
-    if os.path.exists(output):
-        logger.warning(f"It seems that the folder '{output}' already exists. Start removing process...")
-        shutil.rmtree(output)
-        os.mkdir(output)
-        output_caseslists=os.path.join(output,"case_lists")
-        os.mkdir(output_caseslists)   
-
-    elif os.path.exists(output):
-        logger.critical("Filtered_data folder already exists. Please change destination folder (--Destination arg)" )
-        logger.critical("Exit")
-        sys.exit()
-    else:
-        logger.info("Creating a new folder: filtered_data")    
-        os.mkdir(output)
-        output_caseslists=os.path.join(output,"case_lists")
-        os.mkdir(output_caseslists)   
+    output=create_newest_version_folder(output)
+    logger.info(f"Creating a new folder: {output}")
+    output_caseslists=os.path.join(output,"case_lists")
+    os.mkdir(output_caseslists)   
 
     logger.info("Great! Everything is ready to start")
 
@@ -113,9 +99,3 @@ def delete_main(oldpath,removepath,destinationfolder):
     logger.success("The process ended without errors")
     logger.success("Please, check DeleteScript.log to verify that everything went as expected.")
     logger.success("Successfully deleted sample(s)!")
-    
-class MyArgumentParser(argparse.ArgumentParser):
-  """An argument parser that raises an error, instead of quits"""
-  def error(self, message):
-    raise ValueError(message)     
-    

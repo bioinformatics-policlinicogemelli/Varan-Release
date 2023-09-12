@@ -1,11 +1,9 @@
 import os
-import re
 import pandas as pd
-import argparse
 from configparser import ConfigParser
 from versioning import extract_version_str
 
-def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
+def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,version,logger):
     """
         Function to populate cases_sv file
     Args:
@@ -21,7 +19,6 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
     nsamples=len(data_sv.Sample_Id.unique())
     sample_ids=list(data_sv.Sample_Id.unique())
     
-    version=extract_version_str(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -49,7 +46,7 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,logger):
 #
 
 
-def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
+def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,version,logger):
     """
         Function to populate cases_cna file
     Args:
@@ -67,7 +64,6 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
     nsamples=len(data_cna.columns)-1
     sample_ids=list(data_cna.columns)[1:]
     
-    version=extract_version_str(folder)
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:
@@ -95,8 +91,7 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
     case_cna_file.close()
 
 
-
-def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,logger):
+def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,version,logger):
     """
         Function to populate cases_sequenced file
     Args:
@@ -113,7 +108,7 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,log
     nsamples=len(data_sequenced["Tumor_Sample_Barcode"].unique())
     sample_ids=list(data_sequenced["Tumor_Sample_Barcode"].unique())
 
-    version=extract_version_str(folder)
+
     if vus:
         study_id = cancer+project_name+version+"_NoVus"
     else:

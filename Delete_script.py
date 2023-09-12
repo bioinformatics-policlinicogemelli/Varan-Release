@@ -1,23 +1,24 @@
 import os
 import sys
 import argparse
+from Make_meta_and_cases import meta_case_main
 from Delete_functions import *
 from ValidateFolder import validateFolderlog
-from versioning import get_newest_version,create_newest_version_folder
+from versioning import get_newest_version,create_newest_version_folder, extract_info_from_meta
 import loguru
 from loguru import logger
 import shutil
 
 
-def delete_main(oldpath,removepath,destinationfolder):
+def delete_main(oldpath,removelist,destinationfolder):
     
     logger.info("Starting delete_main script:")
-    logger.info(f"delete_main args [oldpath:{oldpath}, removepath:{removepath}, destinationfolder:{destinationfolder}]")	
+    logger.info(f"delete_main args [oldpath:{oldpath}, removepath:{removelist}, destinationfolder:{destinationfolder}]")	
     
     if os.path.exists(oldpath):
         logger.info("Original folder found")
     
-    if os.path.exists(removepath):
+    if os.path.exists(removelist):
         logger.info("Sample list to remove found")
     
     
@@ -29,7 +30,7 @@ def delete_main(oldpath,removepath,destinationfolder):
     logger.info("Great! Everything is ready to start")
 
     os.system("cp "+oldpath+"/*meta* "+output)
-    sampleIds=open(removepath,"r").readlines()
+    sampleIds=open(removelist,"r").readlines()
     sampleIds=[sample.strip() for sample in sampleIds]
 
     
@@ -90,6 +91,10 @@ def delete_main(oldpath,removepath,destinationfolder):
     else:
         logger.warning("cases_sv.txt not found in 'case_lists' folder. Skipping")
 
+
+
+    cancer,vus=extract_info_from_meta(oldpath)
+    meta_case_main(cancer,vus,output)
 
 
     logger.info("Starting Validation Folder...")

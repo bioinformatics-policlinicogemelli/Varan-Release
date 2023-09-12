@@ -3,7 +3,8 @@ import sys
 import argparse
 from ExtractSamples_functions import *
 from ValidateFolder import validateFolderlog
-from versioning import get_newest_version,create_newest_version_folder
+from Make_meta_and_cases import meta_case_main
+from versioning import get_newest_version,create_newest_version_folder ,extract_info_from_meta 
 import loguru
 from loguru import logger
 import shutil
@@ -87,7 +88,11 @@ def extract_main(oldpath,removepath,outputfolder,overwrite):
         extract_caselist_sv(o_cases_sv,sampleIds,output_caseslists)
     else:
         logger.warning("cases_sv.txt not found in 'case_lists' folder. Skipping")
-    
+
+
+    cancer,vus=extract_info_from_meta(oldpath)
+    meta_case_main(cancer,vus,output)
+
     logger.info("Starting Validation Folder...")
     validateFolderlog(output)
     logger.success("The process ended without errors")

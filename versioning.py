@@ -37,7 +37,7 @@ def create_newest_version_folder(outputfolder):
 
 def extract_info_from_meta(folder):
     file_meta=os.path.join(folder,"meta_study.txt")
-    with open(file_meta,'w') as meta:
+    with open(file_meta,'r') as meta:
         for line in meta:
             if line.startswith("type_of_cancer"):
                 cancer=line.split(" ")[1]

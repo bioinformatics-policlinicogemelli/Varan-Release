@@ -1,13 +1,9 @@
 import os
-import sys
-import argparse
 from Make_meta_and_cases import meta_case_main
 from Delete_functions import *
 from ValidateFolder import validateFolderlog
-from versioning import get_newest_version,create_newest_version_folder, extract_info_from_meta
-import loguru
+from versioning import *
 from loguru import logger
-import shutil
 
 
 def delete_main(oldpath,removelist,destinationfolder):
@@ -100,6 +96,11 @@ def delete_main(oldpath,removelist,destinationfolder):
     logger.info("Starting Validation Folder...")
 
     validateFolderlog(output)
+    
+    
+    old_version=destinationfolder+"_v"+str(extract_version_int(output)-1)
+    compare_version(output,old_version,"delete")
+    
     
     logger.success("The process ended without errors")
     logger.success("Please, check DeleteScript.log to verify that everything went as expected.")

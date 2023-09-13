@@ -13,6 +13,8 @@ def extract_version_int(foldername):
 
 
 
+
+
 def get_newest_version(output_folder):
     old_versions=[file for file in os.listdir() if output_folder+"_v" in file ]
     #if len(old_versions)>0: 
@@ -48,3 +50,57 @@ def extract_info_from_meta(folder):
                     
     return cancer,vus 
         
+        
+def extract_sample_list(filecase):
+    with open(filecase,'r') as meta:
+        for line in meta:
+            if line.startswith("case_list_ids"):
+               sample_part=line.split(": ")[1]
+               samples=sample_part.split("\t")
+               sample_list=[sample.strip() for sample in samples]
+    return sample_list       
+        
+        
+
+def compare_sample_file(file1,file2,filename,action):
+    if os.path.exists(file1) and os.path.join(file2):
+        samples_file1=extract_sample_list(file1)  
+        samples_file2=extract_sample_list(file2)
+        new_samples=[sample for sample in samples_file1 if not sample in samples_file2]
+        removed_samples=[sample for sample in samples_file2 if not sample in samples_file1]
+        
+        if len(new_samples)>0:
+            print(f" {len(new_samples)} new samples in {filename} : [{new_samples}]  ")
+        if action!="update":
+            if len(removed_samples)>0:
+                print(f" {len(removed_samples)} new samples in {filename} : [{removed_samples}]  ")
+    else:
+        if not os.path.exists(file1):
+            print(f"{file1} does not exist")
+        if not os.path.exists(file2):
+            print(f"{file2} does not exist")
+    
+        
+        
+def compare_version(folder1,folder2):
+    case_list1=os.path.join(folder1,"case_lists")
+    case_list2=os.path.join(folder2,"case_lists")
+    
+    
+    # Compare case_list_cna
+    cna_1=os.path.join(case_list1,"cases_cna.txt")
+    cna_2=os.path.join(case_list2,"cases_cna.txt")
+
+    compare_sample_file(cna_1,cna_2,"cases_cna")
+    
+    # Compare case_list_sequenced
+    sequenced_1=os.path.join(case_list1,"cases_sequenced.txt")
+    sequenced_2=os.path.join(case_list2,"cases_sequenced.txt")
+    compare_sample_file(sequenced_1,sequenced_2,"cases_sequenced")
+    
+    # Compare case_list_sv
+    sv_1=os.path.join(case_list1,"cases_sv.txt")
+    sv_2=os.path.join(case_list2,"cases_sv.txt")
+    compare_sample_file(sv_1,sv_2,"cases_sequenced")
+    
+    

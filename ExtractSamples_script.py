@@ -1,13 +1,9 @@
 import os
-import sys
-import argparse
 from ExtractSamples_functions import *
 from ValidateFolder import validateFolderlog
 from Make_meta_and_cases import meta_case_main
-from versioning import get_newest_version,create_newest_version_folder ,extract_info_from_meta 
-import loguru
+from versioning import * 
 from loguru import logger
-import shutil
 
 def extract_main(oldpath,removepath,outputfolder):
 
@@ -92,6 +88,10 @@ def extract_main(oldpath,removepath,outputfolder):
 
     cancer,vus=extract_info_from_meta(oldpath)
     meta_case_main(cancer,vus,output)
+
+    old_version=outputfolder+"_v"+str(extract_version_int(output)-1)
+    compare_version(output,old_version,"delete")
+
 
     logger.info("Starting Validation Folder...")
     validateFolderlog(output)

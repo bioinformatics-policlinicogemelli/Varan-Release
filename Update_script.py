@@ -1,11 +1,8 @@
 import os
-import sys
-import argparse
 from Update_functions import *
-import loguru
 from loguru import logger
 from ValidateFolder import validateFolderlog
-from versioning import create_newest_version_folder,extract_version_str, extract_info_from_meta  
+from versioning import *
 from Make_meta_and_cases import meta_case_main
 
 def update_main(path,newpath,output):
@@ -101,6 +98,8 @@ def update_main(path,newpath,output):
     meta_case_main(cancer,vus,output)
 
     validateFolderlog(output)
+    
+    compare_version(newpath,path,"update")
 
     logger.success("The process ended without errors")
     logger.success("Successfully updated study!")

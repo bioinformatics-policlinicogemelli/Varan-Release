@@ -70,10 +70,10 @@ def compare_sample_file(file1,file2,filename,action):
         removed_samples=[sample for sample in samples_file2 if not sample in samples_file1]
         
         if len(new_samples)>0:
-            print(f" {len(new_samples)} new samples in {filename} : [{new_samples}]  ")
+            print(f" {len(new_samples)} new samples in {filename} : {new_samples}  ")
         if action!="update":
             if len(removed_samples)>0:
-                print(f" {len(removed_samples)} new samples in {filename} : [{removed_samples}]  ")
+                print(f" {len(removed_samples)} new samples in {filename} : {removed_samples}  ")
     else:
         if not os.path.exists(file1):
             print(f"{file1} does not exist")

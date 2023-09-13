@@ -17,7 +17,9 @@ def delete_main(oldpath,removelist,destinationfolder):
     if os.path.exists(removelist):
         logger.info("Sample list to remove found")
     
-    
+    old_versions=get_version_list(oldpath)
+    if len(old_versions)<=2:
+        logger.warning("Only one version founded!")
     output=create_newest_version_folder(destinationfolder)
     logger.info(f"Creating a new folder: {output}")
     output_caseslists=os.path.join(output,"case_lists")
@@ -98,7 +100,8 @@ def delete_main(oldpath,removelist,destinationfolder):
     validateFolderlog(output)
     
     
-    old_version=destinationfolder+"_v"+str(extract_version_int(output)-1)
+    old_version=old_versions[-1]
+    #destinationfolder+"_v"+str(extract_version_int(output)-1)
     compare_version(output,old_version,"delete")
     
     

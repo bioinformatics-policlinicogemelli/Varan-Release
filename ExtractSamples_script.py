@@ -15,7 +15,9 @@ def extract_main(oldpath,removepath,outputfolder):
     if os.path.exists(removepath):
         logger.info("Sample list to extract found")
     
-    
+    old_versions=get_version_list(oldpath)
+    if len(old_versions)<=2:
+        logger.warning("Only one version founded!")
     output=create_newest_version_folder(outputfolder)
     logger.info(f"Creating a new folder: {output}")
     output_caseslists=os.path.join(output,"case_lists")
@@ -88,8 +90,9 @@ def extract_main(oldpath,removepath,outputfolder):
 
     cancer,vus=extract_info_from_meta(oldpath)
     meta_case_main(cancer,vus,output)
-
-    old_version=outputfolder+"_v"+str(extract_version_int(output)-1)
+    
+    old_version=old_versions[-1]
+    #old_version=outputfolder+"_v"+str(extract_version_int(output)-1)
     compare_version(output,old_version,"delete")
 
 

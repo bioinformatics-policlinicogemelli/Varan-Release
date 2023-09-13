@@ -48,7 +48,7 @@ def extract_info_from_meta(folder):
                 if "NoVus" in line:
                     vus=True
                     
-    return cancer,vus 
+    return cancer.strip(),vus 
         
         
 def extract_sample_list(filecase):

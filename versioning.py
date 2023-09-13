@@ -55,7 +55,7 @@ def extract_sample_list(filecase):
     with open(filecase,'r') as meta:
         for line in meta:
             if line.startswith("case_list_ids:"):
-               sample_part=line.split("")[1]
+               sample_part=line.split()[1]
                samples=sample_part.split("\t")
                sample_list=[sample.strip() for sample in samples]
     return sample_list       

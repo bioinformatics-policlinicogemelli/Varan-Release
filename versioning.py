@@ -18,8 +18,8 @@ def get_version_list(output_folder):
     old_versions=[file for file in os.listdir() if foldername+"_v" in file ]
     versioni_n=[extract_version_int(version) for version in old_versions ]
     sorted_version=sorted(versioni_n,key=int)
-    list(map(lambda x: "_v"+str(x),sorted_version))
-    return sorted_version
+    version_name_ordered=list(map(lambda x: foldername+"_v"+str(x),sorted_version))
+    return version_name_ordered
 
 def get_newest_version(output_folder):
     old_versions=[file for file in os.listdir() if output_folder+"_v" in file ]

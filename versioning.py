@@ -68,7 +68,8 @@ def extract_sample_list(filecase):
         
         
 
-def compare_sample_file(file1,file2,filename,action):
+def compare_sample_file(file1,file2,filename,action,outputfolder):
+    summary_file= open(f"{outputfolder}/summary.txt", "w")
     if os.path.exists(file1) and os.path.join(file2):
         samples_file1=extract_sample_list(file1)  
         samples_file2=extract_sample_list(file2)
@@ -77,16 +78,20 @@ def compare_sample_file(file1,file2,filename,action):
         
         if len(new_samples)>0:
             print(f" {len(new_samples)} new samples in {filename} : {new_samples}  ")
+            print(f" {len(new_samples)} new samples in {filename} : {new_samples}  ",file=summary_file)
         if action!="update":
             if len(removed_samples)>0:
                 print(f" {len(removed_samples)} new samples in {filename} : {removed_samples}  ")
-    else:
+                print(f" {len(removed_samples)} new samples in {filename} : {removed_samples}  ",file=summary_file)
+    else:   
         if not os.path.exists(file1):
             print(f"{file1} does not exist")
+            print(f"{file1} does not exist",file=summary_file)
         if not os.path.exists(file2):
             print(f"{file2} does not exist")
+            print(f"{file2} does not exist",file=summary_file)
+    summary_file.close()
     
-        
         
 def compare_version(folder1,folder2,action):
     case_list1=os.path.join(folder1,"case_lists")

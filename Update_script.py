@@ -1,4 +1,5 @@
 import os
+import sys
 from Update_functions import *
 from loguru import logger
 from ValidateFolder import validateFolderlog
@@ -18,6 +19,7 @@ def update_main(path,newpath,output):
      
     output=create_newest_version_folder(output)
     version=extract_version_str(output)
+    
     logger.info(f"Creating a new folder: {output}")
     output_caseslists=os.path.join(output,"case_lists")
     os.mkdir(output_caseslists)   

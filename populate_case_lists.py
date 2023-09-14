@@ -89,6 +89,7 @@ def populate_cases_cna(cancer, project_name,vus,folder, cases_list_dir,logger):
     case_cna_file = open(f"{cases_list_dir}/cases_cna.txt", "w")
     for key, value in dictionary_file.items():
         logger.info(f"{key}: {value}", file=case_cna_file)
+        print(f"{key}: {value}", file=case_cna_file)
     case_cna_file.close()
 
 
@@ -132,10 +133,10 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,log
         "case_list_ids": case_list_ids,
     }
 
-    meta_file = open(f"{cases_list_dir}/cases_sequenced.txt", "w")
+    case_sequenced_file = open(f"{cases_list_dir}/cases_sequenced.txt", "w")
     for key, value in dictionary_file.items():
-        print(f"{key}: {value}", file=meta_file)
-    meta_file.close()
+        print(f"{key}: {value}", file=case_sequenced_file)
+    case_sequenced_file.close()
 
 
 if __name__=="__main__":

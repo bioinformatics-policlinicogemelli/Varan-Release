@@ -46,10 +46,10 @@ def concatenate_main(folder, ext, output_file):
     
     if os.path.isdir(output_file):
         logger.critical(f"It seems that the inserted output_file '{output_file}' is not a file, but a folder! Check your '-o/--output_file' field")
-        raise Exception("Exiting from filter_clinvar script!")
+        exit()
     if not output_file.endswith('txt'):
         logger.critical(f"It seems that the inserted output_file '{output_file}' has the wrong extension! Output file must be have a .txt extension.")
-        raise Exception("Exiting from filter_clinvar script!")
+        exit()
         
     file_list = get_files_by_ext(folder, ext)
 

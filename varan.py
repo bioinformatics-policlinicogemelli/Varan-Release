@@ -145,27 +145,27 @@ def main():
         args = parser.parse_args()
     except:
         logger.critical("Output folder is required")
-        raise argparse.ArgumentError("Output folder is required")
+        exit(1)
 
 
     if args.Update and not all([args.Path,args.NewPath]):
         logger.critical("To update a study, you need to specify both original and new folder paths")
-        raise argparse.ArgumentError("To update a study, you need to specify both old and new paths")
-
+        exit(1)
+        
     if args.Extract and not all([args.Path,args.SampleList]):
         logger.critical("To extract samples from a study, you need to specify both original folder path and list samples")
-        raise argparse.ArgumentError("To extract samples from a study, you need to specify both original folder path and list samples")
+        exit()
     
     if args.Remove and not all([args.Path,args.SampleList]):
         logger.critical("To remove samples from a study, you need to specify both original folder path and list samples")
-        raise argparse.ArgumentError("To remove samples from a study, you need to specify both original folder path and list samples")
+        exit()
     
     if not any([args.Update ,args.Extract , args.Remove]) and args.Cancer==None:
             logger.critical("Error Argument: Cancer name is required")
-            raise argparse.ArgumentError("Cancer is required")  
+            exit()  
     if not any([args.Update ,args.Extract , args.Remove]) and args.input==None:
             logger.critical("Error Argument: Input is required")
-            raise argparse.ArgumentError("Input is required")
+            exit()
 
     varan(args)
 

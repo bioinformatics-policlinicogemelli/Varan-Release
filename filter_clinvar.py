@@ -92,7 +92,7 @@ def filter_main(folder, output_folder, vus, overwrite=False, log=False):
         else:
             logger.critical(f"The folder 'NoBenign' already exists. To overwrite an existing folder add the -w option!")
             logger.critical(f"Exit without completing the task!")
-            raise(Exception('Exiting from filter_clinvar script!'))
+            exit()
     
     if os.path.exists(os.path.join(output_folder,'NoVus')) and len(os.listdir(os.path.join(output_folder,'NoVus')))>0:
         if overwrite:
@@ -101,13 +101,13 @@ def filter_main(folder, output_folder, vus, overwrite=False, log=False):
         else:
             logger.critical(f"The folder 'NoVus' already exists. To overwrite an existing folder add the -w option!")
             logger.critical(f"Exit without completing the task!")
-            raise(Exception('Exiting from filter_clinvar script!'))
+            exit()
 
     file_list = concatenate.get_files_by_ext(folder, 'maf')
     if len(file_list)==0:
         logger.warning(f"The maf folder {os.path.join(folder, 'maf')} seems to be empty! Filtering cannot be done.")
         logger.critical("Empty maf folder: Filter script exited before completing!")
-        raise(Exception("Exiting from filter_clinvar script!"))
+        exit()
     
     out_folders=[]
     extensions=[]

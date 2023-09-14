@@ -38,10 +38,10 @@ def create_random_name_folder():
         os.mkdir(temporary)
     except FileNotFoundError:
         logger.critical(f"Scratch folder '{TMP}' not found! Check TMP field in conf.ini")
-        raise(FileNotFoundError("Error in create_random_name_folder: exiting from walk script!"))
+        exit()
     except Exception:
         logger.critical("Something went wrong while creating the vep tmp folder")
-        raise(Exception("Error in create_random_name_folder: exiting from walk script!"))
+        exit()
     return(temporary)
 
 def clear_scratch():
@@ -61,7 +61,6 @@ def get_cnv_from_folder(inputFolderCNV):
     if len(incorrect_files)!=0:
         logger.critical(f"It seems that the files \n{incorrect_files} \nare not CNV! Please check your CNV input data and try again.")
         exit()
-        #raise Exception("Error in get_cnv_from_folder script: exiting from walk script!")       
     logger.info(f"#{len(cnv_vcf_files)} vcf files found in CNV folder")
     return cnv_vcf_files
 
@@ -146,7 +145,6 @@ def get_snv_from_folder(inputFolderSNV):
     if len(incorrect_files)!=0:
         logger.critical(f"It seems that the files \n{incorrect_files} \nare not SNV! Please check your SNV input data and try again.")
         exit()
-       # raise Exception("Error in get_snv_from_folder: exiting from walk script")   
     logger.info(f"#{len(snv_vcf_files)} vcf files found in SNV folder")
     return snv_vcf_files
 
@@ -307,18 +305,18 @@ def get_combinedVariantOutput_from_folder(inputFolder, tsvpath):
         file = pd.read_csv(tsvpath,sep="\t",dtype=str)
     except Exception as e:
         logger.critical(f"Something went wrong while reading {tsvpath}!")
-        raise(Exception("Error in get_combinedVariantOutput_from_folder script: exiting from walk script!"))
+        exit()
     for _,row in file.iterrows():
         try:
             patientID=str(row["PatientID"])
         except KeyError as e: 
             logger.critical(f"KeyError: {e} not found! Check if column name is correctly spelled or if there are tabs/spaces before or after the coloumn key: \n{row.index}. \nThis error may also occur if the table columns have not been separated by tabs!")
-            raise(KeyError("Error in get_combinedVariantOutput_from_folder script: exiting from walk script!"))
+            exit()
         try:
             sampleID=str(row["SampleID"])
         except KeyError as e: 
             logger.critical(f"KeyError: {e} not found! Check if column name is correctly spelled or if there are tabs/spaces before or after the coloumn key: \n{row.index}. \nThis error may also occur if the table columns have not been separated by tabs!")
-            raise(KeyError("Error in get_combinedVariantOutput_from_folder script: exiting from walk script!"))
+            exit()
         combined_file = patientID+'_CombinedVariantOutput.tsv'
         combined_path = os.path.join(inputFolder,"CombinedOutput",combined_file)
         if os.path.exists(combined_path):
@@ -386,13 +384,13 @@ def walk_folder(input, output_folder,  vcf_type=None ,filter_snv=False): #overwr
         tsvfiles=[file for file in os.listdir(input) if file.endswith("tsv")][0]
     except IndexError:
         logger.critical(f"It seems that no tsv file is in your folder!")
-        raise(IndexError("Exiting from walk script!"))
+        exit()
     except FileNotFoundError:
         logger.critical(f"No input directory '{input}' was found: try check your path")
-        raise(FileNotFoundError("Exiting from walk script!"))
+        exit()
     except Exception as e:
         logger.critical(f"Something went wrong! {print(traceback.format_exc())}")
-        raise(Exception("Error while reading clinical_info.tsv: exiting from walk script!"))
+        exit()
 
     tsvpath=os.path.join(input,tsvfiles)    
     combined_dict = get_combinedVariantOutput_from_folder(input,tsvpath)

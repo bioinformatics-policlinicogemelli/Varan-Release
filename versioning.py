@@ -112,6 +112,6 @@ def compare_version(folder1,folder2,action,outputfolder):
     # Compare case_list_sv
     sv_1=os.path.join(case_list1,"cases_sv.txt")
     sv_2=os.path.join(case_list2,"cases_sv.txt")
-    compare_sample_file(sv_1,sv_2,"cases_sequenced",action,outputfolder)
+    compare_sample_file(sv_1,sv_2,"cases_sv",action,outputfolder)
     
     

@@ -93,7 +93,7 @@ def compare_sample_file(file1,file2,filename,action,outputfolder):
     summary_file.close()
     
         
-def compare_version(folder1,folder2,action):
+def compare_version(folder1,folder2,action,outputfolder):
     case_list1=os.path.join(folder1,"case_lists")
     case_list2=os.path.join(folder2,"case_lists")
     
@@ -102,16 +102,16 @@ def compare_version(folder1,folder2,action):
     cna_1=os.path.join(case_list1,"cases_cna.txt")
     cna_2=os.path.join(case_list2,"cases_cna.txt")
 
-    compare_sample_file(cna_1,cna_2,"cases_cna",action)
+    compare_sample_file(cna_1,cna_2,"cases_cna",action,outputfolder)
     
     # Compare case_list_sequenced
     sequenced_1=os.path.join(case_list1,"cases_sequenced.txt")
     sequenced_2=os.path.join(case_list2,"cases_sequenced.txt")
-    compare_sample_file(sequenced_1,sequenced_2,"cases_sequenced",action)
+    compare_sample_file(sequenced_1,sequenced_2,"cases_sequenced",action,outputfolder)
     
     # Compare case_list_sv
     sv_1=os.path.join(case_list1,"cases_sv.txt")
     sv_2=os.path.join(case_list2,"cases_sv.txt")
-    compare_sample_file(sv_1,sv_2,"cases_sequenced",action)
+    compare_sample_file(sv_1,sv_2,"cases_sequenced",action,outputfolder)
     
     

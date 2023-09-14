@@ -14,10 +14,11 @@ def extract_version_int(foldername):
 
 def get_version_list(output_folder):
     foldername=output_folder.split("_v")[0]
+    print(foldername)
     old_versions=[file for file in os.listdir() if foldername+"_v" in file ]
-    versioni_n=[version.split(output_folder)[1] for version in old_versions ]
+    versioni_n=[extract_version_int(version) for version in old_versions ]
     sorted_version=sorted(versioni_n,key=int)
-    list(map(lambda x: "_v"+x,sorted_version))
+    list(map(lambda x: "_v"+str(x),sorted_version))
     return sorted_version
 
 def get_newest_version(output_folder):

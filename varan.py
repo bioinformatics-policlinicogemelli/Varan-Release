@@ -8,7 +8,6 @@ from loguru import logger
 
 @logger.catch()
 def varan(args):
-    
     logger.info(f"Varan args [input:{args.input}, output_folder:{args.output_folder}, filter_snv:{args.filter_snv}, cancer:{args.Cancer}, \
                             vcf_type:{args.vcf_type},  vus:{args.filterVus}], \
                             update:{args.Update}, extract:{args.Extract}, remove:{args.Remove}")

@@ -326,6 +326,39 @@ def get_combinedVariantOutput_from_folder(inputFolder, tsvpath):
         combined_dict[sampleID] = combined_path
     return combined_dict
 
+def transform_input(tsv,output_folder):
+    os.mkdir(os.path.join(output_folder,"temp"))
+    os.mkdir(os.path.join(output_folder,"temp","SNV"))
+    os.mkdir(os.path.join(output_folder,"temp","CNV"))
+    os.mkdir(os.path.join(output_folder,"temp","CombinedOutput"))
+
+    os.system("cp "+tsv +" "+os.path.join(output_folder,"temp"))
+
+    tsv_file=pd.read_csv(tsv,sep="\t",dtype="string")
+
+    for _,row in tsv_file.iterrows():
+        res_folder="/data/data_storage/novaseq_results"
+        snv_path=os.path.join(res_folder,row["RunID"],"Results",row["PatientID"],row["SampleID"],row["SampleID"]+"_MergedSmallVariants.genome.vcf")
+        cnv_path=os.path.join(res_folder,row["RunID"],"Results",row["PatientID"],row["SampleID"],row["SampleID"]+"_CopyNumberVariants.vcf")
+        combout=os.path.join(res_folder,row["RunID"],"Results",row["PatientID"],row["PatientID"]+"_CombinedVariantOutput.tsv")
+    
+        if os.path.exists(combout):
+            os.system("cp "+combout + " "+os.path.join(output_folder,"temp","CombinedOutput"))
+        else:
+            logger.warning(f"{combout} not found")
+
+        if os.path.exists(snv_path):
+            os.system("cp "+snv_path + " "+os.path.join(output_folder,"temp","SNV"))
+        else:
+            logger.warning(f"{snv_path} not found")
+
+        if os.path.exists(cnv_path):
+            os.system("cp "+cnv_path + " "+os.path.join(output_folder,"temp","CNV"))
+        else:
+            logger.warning(f"{cnv_path} not found")
+    return os.path.join(output_folder,"temp")
+
+
 def walk_folder(input, output_folder,  vcf_type=None ,filter_snv=False): #overwrite_output=False,
 
     logger.info("Starting walk_folder script:")
@@ -339,8 +372,10 @@ def walk_folder(input, output_folder,  vcf_type=None ,filter_snv=False): #overwr
     ###       OUTPUT FOLDER     ###
     ###############################
  
-    output_folder=create_folder(output_folder) #,overwrite_output
- 
+    output_folder=create_folder(output_folder) 
+    if os.path.isfile(input):
+        input=transform_input(input,output_folder)
+
     if os.path.exists(inputFolderCNV) and vcf_type!="snv":
         logger.info("Check CNV files...")
         case_folder_arr_cnv = get_cnv_from_folder(inputFolderCNV)

@@ -1,10 +1,3 @@
-#####################################
-# NAME: concatenate.py
-# AUTHOR: Luciano Giaco'
-# Date: 18/01/2023
-version = "1.0"
-# ===================================
-
 import os
 import argparse
 from loguru import logger

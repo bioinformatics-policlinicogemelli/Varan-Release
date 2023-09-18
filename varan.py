@@ -140,7 +140,6 @@ def main():
     try:
         args = parser.parse_args()
     except:
-        logger.critical("Output folder is required")
         exit(1)
 
 

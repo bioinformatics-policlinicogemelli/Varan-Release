@@ -1,10 +1,3 @@
-#####################################
-# NAME: filter_clinvar.py
-# AUTHOR: Luciano Giaco'
-# Date: 23/01/2023
-version = "1.0"
-# ===================================
-
 import os
 import ast
 import argparse

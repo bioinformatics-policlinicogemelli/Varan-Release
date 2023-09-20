@@ -1,6 +1,3 @@
-version = "1.0"
-# ===============================================
-
 import os 
 import sys
 import argparse
@@ -143,7 +140,6 @@ def main():
     try:
         args = parser.parse_args()
     except:
-        logger.critical("Output folder is required")
         exit(1)
 
 

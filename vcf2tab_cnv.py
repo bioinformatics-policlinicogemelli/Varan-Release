@@ -1,10 +1,3 @@
-###############################################
-# NAME : vcf2tab_cnv.py
-# Date: 11/10/2023
-version = "1.0"
-###############################################
-
-
 import argparse
 import math
 import pandas as pd

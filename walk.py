@@ -225,6 +225,7 @@ def run_vcf2maf(cl):
 def create_folder(output_folder):
     version="_v1"
     output_folder_version=output_folder+version
+    
     if os.path.exists(output_folder_version):
         logger.warning(f"It seems that the folder '{output_folder_version}' already exists.")
         output_folder_version=get_newest_version(output_folder)

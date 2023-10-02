@@ -101,7 +101,8 @@ def delete_main(oldpath,removelist,destinationfolder):
     
     
     old_version=old_versions[-1]
-    compare_version(output,old_version,"delete",output)
+    if len(old_version)>1:
+        compare_version(output,old_version,"delete",output)
     
     
     logger.success("The process ended without errors")

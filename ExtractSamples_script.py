@@ -92,8 +92,10 @@ def extract_main(oldpath,removepath,outputfolder):
     meta_case_main(cancer,vus,output)
     
     old_version=old_versions[-1]
+   
     #old_version=outputfolder+"_v"+str(extract_version_int(output)-1)
-    compare_version(output,old_version,"delete",output)
+    if len(old_version)>1:
+        compare_version(output,old_version,"delete",output)
 
 
     logger.info("Starting Validation Folder...")

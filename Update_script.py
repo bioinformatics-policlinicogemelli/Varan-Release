@@ -101,7 +101,8 @@ def update_main(path,newpath,output):
 
     validateFolderlog(output)
     
-    compare_version(newpath,path,"update",output)
+    if len(old_version)>1:
+        compare_version(newpath,path,"update",output)
 
     logger.success("The process ended without errors")
     logger.success("Successfully updated study!")

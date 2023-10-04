@@ -140,6 +140,7 @@ def main():
     try:
         args = parser.parse_args()
     except:
+        logger.critical("Error Argument: Output is required")
         exit(1)
 
 

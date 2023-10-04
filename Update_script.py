@@ -16,7 +16,12 @@ def update_main(path,newpath,output):
 
     if os.path.exists(newpath):
         logger.info("New folder found")
-     
+    
+
+    old_versions=get_version_list(output)
+    if len(old_versions)<=2:
+        logger.warning("Only one version founded!")
+
     output=create_newest_version_folder(output)
     version=extract_version_str(output)
     
@@ -101,7 +106,7 @@ def update_main(path,newpath,output):
 
     validateFolderlog(output)
     
-    if len(old_version)>1:
+    if len(old_versions)>1:
         compare_version(newpath,path,"update",output)
 
     logger.success("The process ended without errors")

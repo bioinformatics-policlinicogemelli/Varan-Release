@@ -74,8 +74,9 @@ def extract_sample_list(filecase):
         
 
 def compare_sample_file(file1,file2,filename,action,outputfolder):
+    
     summary_file= open(f"{outputfolder}/summary.txt", "w")
-    if os.path.exists(file1) and os.path.join(file2):
+    if os.path.exists(file1) and os.path.exists(file2):
         samples_file1=extract_sample_list(file1)  
         samples_file2=extract_sample_list(file2)
         new_samples=[sample for sample in samples_file1 if not sample in samples_file2 and sample!=""]

@@ -446,6 +446,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
     combined_dict = get_combinedVariantOutput_from_folder(input,tsvpath)
 
     MSI_THR=config.get('MSI', 'THRESHOLD')
+
     TMB=ast.literal_eval(config.get('TMB', 'THRESHOLD'))
     for k, v in combined_dict.items():
         logger.info(f"Reading Tumor clinical parameters info in CombinedOutput file {v}...")

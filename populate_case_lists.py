@@ -41,6 +41,7 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,version,lo
     
     case_sv_file = open(f"{cases_list_dir}/cases_sv.txt", "w")
     for key, value in dictionary_file.items():
+        logger.info(f"{key}: {value}", file=case_sv_file)
         print(f"{key}: {value}", file=case_sv_file)
     case_sv_file.close()
 #
@@ -133,6 +134,7 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,ver
 
     meta_file = open(f"{cases_list_dir}/cases_sequenced.txt", "w")
     for key, value in dictionary_file.items():
+        logger.info(f"{key}: {value}", file=meta_file)
         print(f"{key}: {value}", file=meta_file)
     meta_file.close()
 

@@ -1,0 +1,29 @@
+name: VarAn
+
+channels:
+  - conda-forge 
+  - bioconda
+  
+  - defaults
+  - etetoolkit
+
+
+dependencies:
+  - git
+  - python
+  - wget
+  - pip
+  - bcftools
+  - htslib
+  - loguru
+  - pandas
+  - ensembl-vep=110.0 
+  - samtools
+  - vcf2maf
+  - pyvcf
+
+
+
+  
+#export PATH=/Users/paolopetescia/desktop/ensembl-vep-release-110:$PATH    
+#export PATH=$HOME/.vep:$PATH   

@@ -15,15 +15,22 @@ Click <a href="https://github.com/bioinformatics-policlinicogemelli/Varan-Releas
 ## Installation procedure
 
 ### Prerequisites
-* <b>Variant Effect Predictor (VEP)</b><p align="justify">The Variant Effect Predictor <a href="https://www.ensembl.org/info/docs/tools/vep/index.html">VEP</a> is a tool used to determine the effect of variants (SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions. <br>The steps to install VEP can be found <a href="https://www.ensembl.org/info/docs/tools/vep/script/vep_download.html"> here</a>, while DB and FASTA files can be downloaded <a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_cache.html#cache)"> here</a>
+* <b>Python</b><p align="justify"> <a href="https://www.python.org/">Python</a> is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation. It supports multiple programming paradigms, including structured object-oriented and functional programming. It can be downloaded <a href="https://www.python.org/downloads/"> here</a>. <br> --> Tested version: 3.9.2
+
+* <b>Variant Effect Predictor (VEP)</b><p align="justify">The Variant Effect Predictor <a href="https://www.ensembl.org/info/docs/tools/vep/index.html">VEP</a> is a tool used to determine the effect of variants (SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions. <br>The steps to install VEP can be found <a href="https://www.ensembl.org/info/docs/tools/vep/script/vep_download.html"> here</a>, while DB and FASTA files can be downloaded <a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_cache.html#cache)"> here</a>. Latest version of clinvar filter can be downloaded for <a href="https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37"> GRCh37</a> (Genome Reference Consortium Human Build 37 Organism) or for <a href="https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38"> GRCh38</a> (Genome Reference Consortium Human Build 38 Organism). Older versions can be found <a href="https://ftp.ncbi.nlm.nih.gov/pub/clinvar"> here</a>.
+<br> --> Tested version: 110
 
 * <b>vcf2maf</b><br><p align="justify"><a href="https://github.com/mskcc/vcf2maf/tree/main">vcf2maf</a> is the tool required for the conversion of vcf files in maf format ones. 
 <br>All the installation info can be found <a href="https://github.com/mskcc/vcf2maf/tree/main">here</a>
+<br> --> Tested version: 1.6.21
 
 * <b>Samtools</b> <br><p align="justify"><a href="https://www.htslib.org/">Samtools</a> is a suite of programs for interacting with high-throughput sequencing data. 
-<br>All the installation info can be found <a href="https://www.htslib.org/download/">here</a>
+<br>All the installation info for samtools and its libraries htslib and bcftools can be found <a href="https://www.htslib.org/download/">here</a>
+<br> --> Tested version: 1.18
 
 ### Varan 2.0
+
+#### <u>installation on local system</u>
 
 To correctly install and use Varan 2.0:
 1. Open a terminal
@@ -67,7 +74,16 @@ optional arguments:
 -p PATH, --Path PATH Path of original study folder
 ```
 <p align="justify">
-⚠️ <i>If any error is printed while launching varan.py, check if the step 3 completed without errors</i>
+⚠️ <i>If any error is printed while launching varan.py, check if step 3 completed without errors</i>
+
+#### <u>installation on virtual environment</u>
+
+This type of installation has been tested on:
+
+* Mac Intel models
+
+<p align="justify">⚠️ <i>Mac M1 model have shown different problems with this kind of procedures. It is strongly recommended to follow a local installation for these machines.</i>
+
 
 ## Usage
 

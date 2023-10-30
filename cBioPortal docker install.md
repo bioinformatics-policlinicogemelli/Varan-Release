@@ -8,7 +8,7 @@ This section of the guide will explain how to install the cBioPortal docker imag
 
 To correctly install and use the cBioPortal docker image you can check the following steps:
 
-1. Download [Docker](https://www.docker.com/) to the official website.
+1. Download [Docker](https://www.docker.com/) to the official website.                                                                                                                      ⚠️ if you use a mac device (Apple Silicon m1,m2) go to the docker settings, features in development and activate the option "Use Rosetta for x86/amd64 emulation on Apple Silicon"
 
 2. Open a terminal and digit the commands:
 

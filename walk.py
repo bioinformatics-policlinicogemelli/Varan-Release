@@ -455,7 +455,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
         except Exception as e:
             logger.error(f"Something went wrong!")
         logger.info(f"Tumor clinical parameters Values found: {tmv_msi}")
-      
+        import pdb;pdb.set_trace()
         if not tmv_msi['MSI'][0][1]=="NA":
             if float(tmv_msi['MSI'][0][1]) >= 40:
                 table_dict_patient[k].append(tmv_msi['MSI'][1][1])   
@@ -465,8 +465,9 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
             table_dict_patient[k].append('NA')
         table_dict_patient[k].append(tmv_msi['TMB_Total'])
 
+        
         if not tmv_msi['MSI'][0][1]=="NA":
-            if float(tmv_msi['MSI'][0][1]) < float(MSI_THR):
+            if float(tmv_msi['MSI'][1][1]) < float(MSI_THR):
                 table_dict_patient[k].append("Stable")   
             else:
                 table_dict_patient[k].append('Unstable')

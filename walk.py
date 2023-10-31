@@ -30,6 +30,7 @@ TMP = config.get('Paths', 'TMP')
 VEP_PATH = config.get('Paths', 'VEP_PATH')
 VEP_DATA = config.get('Paths', 'VEP_DATA')
 CNA=ast.literal_eval(config.get('Cna', 'HEADER_CNV'))
+CLINV = config.get('Paths', 'CLINV')
 
 def create_random_name_folder():
     nome_cartella = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
@@ -196,6 +197,9 @@ def vcf2maf_constructor(k, v, temporary,output_folder):
     out_file = os.path.join(output_folder,os.path.join(OUTPUT_MAF, file_vcf+'.maf'))
     cl.append('--output-maf')
     cl.append(out_file)
+    if not CLINV =="":
+        cl.append('--vep-custom')
+        cl.append(CLINV)
     cl.append('--ref-fasta')
     cl.append(REF_FASTA)
     cl.append('--tmp-dir')

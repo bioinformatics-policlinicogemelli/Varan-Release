@@ -460,7 +460,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
             logger.error(f"Something went wrong!")
         logger.info(f"Tumor clinical parameters Values found: {tmv_msi}")
       
-        if not tmv_msi['MSI'][0][1]=="NA":
+        if tmv_msi["MSI"][0][1]!="" and  tmv_msi['MSI'][0][1]!="NA":
             if float(tmv_msi['MSI'][0][1]) >= 40:
                 table_dict_patient[k].append(tmv_msi['MSI'][1][1])   
             else:
@@ -469,7 +469,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
             table_dict_patient[k].append('NA')
         table_dict_patient[k].append(tmv_msi['TMB_Total'])
 
-        if not tmv_msi['MSI'][0][1]=="NA":
+        if not tmv_msi["MSI"][0][1]=="" and not tmv_msi['MSI'][0][1]=="NA":
             if float(tmv_msi['MSI'][0][1]) < float(MSI_THR):
                 table_dict_patient[k].append("Stable")   
             else:
@@ -479,7 +479,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
 
         found = False
         for _k, _v in TMB.items():
-            if not float(tmv_msi["TMB_Total"])=="NA":
+            if not tmv_msi["TMB_Total"]=="" and not tmv_msi["TMB_Total"]=="NA":
                 if float(tmv_msi["TMB_Total"])<=float(_v):
                     table_dict_patient[k].append(_k)
                     found=True

@@ -114,7 +114,7 @@ def main():
 
     parser = MyArgumentParser(add_help=True, exit_on_error=True, usage=None, description='Argument of Varan script')
     
-    parser.print_help()
+
     # WALK BLOCK
     parser.add_argument('-c', '--Cancer', required=False,help='Cancer Name')
     parser.add_argument('-i', '--input', required=False, help='input folder tsv with data or tsv with path of data')

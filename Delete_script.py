@@ -6,8 +6,7 @@ from versioning import *
 from loguru import logger
 
 
-def delete_main(oldpath,removelist,destinationfolder):
-    
+def delete_main(oldpath,removelist,destinationfolder):    
     logger.info("Starting delete_main script:")
     logger.info(f"delete_main args [oldpath:{oldpath}, removepath:{removelist}, destinationfolder:{destinationfolder}]")	
     

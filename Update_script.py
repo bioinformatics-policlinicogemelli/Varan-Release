@@ -5,7 +5,7 @@ from loguru import logger
 from ValidateFolder import validateFolderlog
 from versioning import *
 from Make_meta_and_cases import meta_case_main
-import shutil
+from shutil import copy
 
 def update_main(path,newpath,output):
     

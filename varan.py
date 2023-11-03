@@ -112,15 +112,15 @@ def main():
     logger.add(os.path.join('Logs',logfile),format="{time:YYYY-MM-DD_HH-mm-ss.SS} | <lvl>{level} </lvl>| {message}",mode="w", backtrace=True, diagnose=True)
     logger.info("Welcome to VARAN")
 
-    parser = MyArgumentParser(add_help=False, exit_on_error=False, usage=None, description='Argument of Varan script')
+    parser = MyArgumentParser(add_help=True, exit_on_error=True, usage=None, description='Argument of Varan script')
     
+
     # WALK BLOCK
     parser.add_argument('-c', '--Cancer', required=False,help='Cancer Name')
     parser.add_argument('-i', '--input', required=False, help='input folder tsv with data or tsv with path of data')
     parser.add_argument('-f', '--filter_snv', required=False,action='store_true',help='Filter out from the vcf the variants wit dot (.) in Alt column')
     parser.add_argument('-t', '--vcf_type', required=False, choices=['snv', 'cnv'],help='Select the vcf file to parse')
-    # parser.add_argument('-w', '--overWrite', required=False,action='store_true',help='Overwrite output folder if it exists')
-
+   
     # FILTER_CLINVAR BLOCK
     parser.add_argument('-v', '--filterVus', required=False,action='store_true', help='Filter out VUS variants')
     # UPDATE BLOCK
@@ -136,12 +136,13 @@ def main():
     parser.add_argument('-s', '--SampleList', required=False,help='Path of file with list of SampleIDs')
     parser.add_argument('-p', '--Path', required=False,help='Path of original study folder')
     
-
+   # args = parser.parse_args()
     try:
-        args = parser.parse_args()
-    except:
+        args = parser.parse_args()  
+    except ValueError :
         logger.critical("Error Argument: Output is required")
         exit(1)
+
 
 
     if args.Update and not all([args.Path,args.NewPath]):

@@ -30,6 +30,7 @@ TMP = config.get('Paths', 'TMP')
 VEP_PATH = config.get('Paths', 'VEP_PATH')
 VEP_DATA = config.get('Paths', 'VEP_DATA')
 CNA=ast.literal_eval(config.get('Cna', 'HEADER_CNV'))
+CLINV = config.get('Paths', 'CLINV')
 
 def create_random_name_folder():
     nome_cartella = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
@@ -196,6 +197,9 @@ def vcf2maf_constructor(k, v, temporary,output_folder):
     out_file = os.path.join(output_folder,os.path.join(OUTPUT_MAF, file_vcf+'.maf'))
     cl.append('--output-maf')
     cl.append(out_file)
+    if not CLINV =="":
+        cl.append('--vep-custom')
+        cl.append(CLINV)
     cl.append('--ref-fasta')
     cl.append(REF_FASTA)
     cl.append('--tmp-dir')
@@ -455,8 +459,8 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
         except Exception as e:
             logger.error(f"Something went wrong!")
         logger.info(f"Tumor clinical parameters Values found: {tmv_msi}")
-        import pdb;pdb.set_trace()
-        if not tmv_msi['MSI'][0][1]=="NA":
+      
+        if tmv_msi["MSI"][0][1]!="" and  tmv_msi['MSI'][0][1]!="NA":
             if float(tmv_msi['MSI'][0][1]) >= 40:
                 table_dict_patient[k].append(tmv_msi['MSI'][1][1])   
             else:
@@ -465,9 +469,8 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
             table_dict_patient[k].append('NA')
         table_dict_patient[k].append(tmv_msi['TMB_Total'])
 
-        
-        if not tmv_msi['MSI'][0][1]=="NA":
-            if float(tmv_msi['MSI'][1][1]) < float(MSI_THR):
+        if not tmv_msi["MSI"][0][1]=="" and not tmv_msi['MSI'][0][1]=="NA":
+            if float(tmv_msi['MSI'][0][1]) < float(MSI_THR):
                 table_dict_patient[k].append("Stable")   
             else:
                 table_dict_patient[k].append('Unstable')
@@ -476,7 +479,7 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
 
         found = False
         for _k, _v in TMB.items():
-            if not float(tmv_msi["TMB_Total"])=="NA":
+            if not tmv_msi["TMB_Total"]=="" and not tmv_msi["TMB_Total"]=="NA":
                 if float(tmv_msi["TMB_Total"])<=float(_v):
                     table_dict_patient[k].append(_k)
                     found=True

@@ -274,7 +274,7 @@ def write_clinical_patient(output_folder, table_dict):
     list_patients = flatten(nested_list)
     list_patients = set(list_patients)
     for v in list_patients:
-        cil_sample.write(v+"\tNaN\tNa\n")
+        cil_sample.write(v+"\tNan\tNa\n")
     cil_sample.close()
 
 def write_clinical_sample(output_folder, table_dict):

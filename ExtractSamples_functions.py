@@ -50,7 +50,6 @@ def extract_clinical_patient(oldpath,sample_ids,output_folder):
     Example:
       >>>  extract_clinical_patient('input_folder/', ['sample1', 'sample2'], 'output_folder/')
     """
-    
     file=pd.read_csv(os.path.join(oldpath,"data_clinical_patient.txt"),sep="\t")
     sample=pd.read_csv(os.path.join(oldpath,"data_clinical_sample.txt"),sep="\t")
     patient_ids=list(sample[sample["Sample Identifier"].astype(str).isin(sample_ids)]["#Patient Identifier"])

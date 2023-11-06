@@ -70,23 +70,23 @@ def delete_main(oldpath,removelist,destinationfolder):
         logger.warning("data_sv.txt not found in current folder. Skipping")
     #
     
-    o_cases_cna=os.path.join(oldpath,"case_lists/cases_cna.txt")
-    if os.path.exists(o_cases_cna):
-        delete_caselist_cna(o_cases_cna,sampleIds,output_caseslists)
-    else:
-        logger.warning("cases_cna.txt not found in 'case_lists' folder. Skipping")
+    # o_cases_cna=os.path.join(oldpath,"case_lists/cases_cna.txt")
+    # if os.path.exists(o_cases_cna):
+    #     delete_caselist_cna(o_cases_cna,sampleIds,output_caseslists)
+    # else:
+    #     logger.warning("cases_cna.txt not found in 'case_lists' folder. Skipping")
     
-    o_cases_sequenced=os.path.join(oldpath,"case_lists/cases_sequenced.txt")
-    if os.path.exists(o_cases_sequenced):
-        delete_caselist_sequenced(o_cases_sequenced,sampleIds,output_caseslists)
-    else:
-        logger.warning("cases_sequenced.txt not found in 'case_lists' folder. Skipping")
-    #  
-    o_cases_sv=os.path.join(oldpath,"case_lists/cases_sv.txt")
-    if os.path.exists(o_cases_sv):
-        delete_caselist_sv(o_cases_sv,sampleIds,output_caseslists)
-    else:
-        logger.warning("cases_sv.txt not found in 'case_lists' folder. Skipping")
+    # o_cases_sequenced=os.path.join(oldpath,"case_lists/cases_sequenced.txt")
+    # if os.path.exists(o_cases_sequenced):
+    #     delete_caselist_sequenced(o_cases_sequenced,sampleIds,output_caseslists)
+    # else:
+    #     logger.warning("cases_sequenced.txt not found in 'case_lists' folder. Skipping")
+    # #  
+    # o_cases_sv=os.path.join(oldpath,"case_lists/cases_sv.txt")
+    # if os.path.exists(o_cases_sv):
+    #     delete_caselist_sv(o_cases_sv,sampleIds,output_caseslists)
+    # else:
+    #     logger.warning("cases_sv.txt not found in 'case_lists' folder. Skipping")
 
 
 

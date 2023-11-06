@@ -4,6 +4,7 @@ from configparser import ConfigParser
 from populate_case_lists import populate_cases_cna,populate_cases_sequenced,populate_cases_sv
 from loguru import logger
 from versioning import extract_version_str
+import pandas as pd
 
 
 def create_meta_study(cancer, project_name,vus, description, output_dir,version):
@@ -330,15 +331,30 @@ def meta_case_main(cancer,vus,output_folder):
     ########### CASE LIST FUNCTION ###########
 
     if os.path.exists(os.path.join(output_folder,"data_mutations_extended.txt")):
-        populate_cases_sequenced(cancer,project_name, vus, output_folder,cases_list_dir,version,logger)
+        file_extended=pd.read_csv(os.path.join(output_folder,"data_mutations_extended.txt"),sep="\t")
+        if file_extended.shape[0]>1:
+            populate_cases_sequenced(cancer,project_name, vus, output_folder,cases_list_dir,version,logger)
+        else:
+            os.remove(os.path.join(output_folder,"data_mutations_extended.txt"))
+            os.remove(os.path.join(output_folder,"meta_mutations_extended.txt"))
     else: logger.warning("data_mutations_extended.txt file not found!")
     
     if os.path.exists(os.path.join(output_folder,"data_cna.txt")):
-        populate_cases_cna(cancer, project_name,vus,output_folder, cases_list_dir,version,logger)
+        file_cna=pd.read_csv(os.path.join(output_folder,"data_cna.txt"),sep="\t")
+        if file_cna.shape[0]>1:
+            populate_cases_cna(cancer, project_name,vus,output_folder, cases_list_dir,version,logger)
+        else:
+            os.remove(os.path.join(output_folder,"data_cna.txt"))
+            os.remove(os.path.join(output_folder,"meta_cna.txt"))
     else: logger.warning("data_cna.txt file not found!")
     
     if os.path.exists(os.path.join(output_folder,"data_sv.txt")):
-        populate_cases_sv(cancer,project_name, vus, output_folder,cases_list_dir,version,logger)
+        file_sv=pd.read_csv(os.path.join(output_folder,"data_sv.txt"),sep="\t")
+        if file_sv.shape[0]>1:
+            populate_cases_sv(cancer,project_name, vus, output_folder,cases_list_dir,version,logger)
+        else:
+            os.remove(os.path.join(output_folder,"data_sv.txt"))
+            os.remove(os.path.join(output_folder,"meta_sv.txt"))
     else: logger.warning("data_sv.txt file not found!")
 
     logger.success("Make_meta_and_cases script completed!")

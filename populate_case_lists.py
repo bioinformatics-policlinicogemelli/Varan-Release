@@ -26,7 +26,7 @@ def populate_cases_sv(cancer, project_name,vus, folder,cases_list_dir,version,lo
 
     stable_id = study_id+"_sv"
     case_list_name = "Samples with SV data"
-    case_list_description = "All samples (+"+str(nsamples)+") samples"
+    case_list_description = "All samples ("+str(nsamples)+" samples)"
     case_list_category = "all_cases_with_sv_data"
     case_list_ids = "\t".join(sample_ids)
 
@@ -120,7 +120,7 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,ver
 
     case_list_category = "all_cases_with_mutation_data"
     case_list_name = "Sequenced Tumors"
-    case_list_description = "All sequenced samples (" +str(nsamples)+"samples)"
+    case_list_description = "All sequenced samples (" +str(nsamples)+" samples)"
     case_list_ids = "\t".join(sample_ids)
 
     dictionary_file = {

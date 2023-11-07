@@ -92,7 +92,8 @@ This type of installation has been tested on:
    - To create a new virtual environment, you can use the following Conda command:
 
      ```bash
-     conda env create -f environment.yml -p ./varan_env     ```
+     conda env create -f environment.yml -p ./varan_env
+     ```
 
 4. **Activate the virtual environment:**
 
@@ -181,7 +182,7 @@ These are the options that can be set for this block:
 | Options | Description | Type | Required
 |-------------------------|----------------| :---:| :---:|
 |-o <br> --output_folder| <p align="justify">Add this option to insert the path where to save the output folder| string | Yes
-|-i <br> --input| <p align="justify">Add this option to insert the path to the input tsv file where the vcf files are listed|  | No
+|-i <br> --input| <p align="justify">Add this option to insert the path to the input tsv file where the vcf files are listed| string | No
 |-c <br> --cancer| <p align="justify">Add this option to specify a cancer type| string | No
 |-f <br> --filter_snv| <p align="justify">Add this option to filter out from the vcf the variants with dot (.) and PASS in Alt and Filter column respectively |boolean| No
 |-t <br> --vcf_type|<p align="justify">Add this option to specify the type of vcf (snv/cnv) |string|Only if the -i option is selected
@@ -197,12 +198,13 @@ python varan.py -i <path_to_vfc_tsv_file> -c <cancer_name> -t snv -f -v -o <path
 ```
 python varan.py -i <path_to_vfc_tsv_file> -c <cancer_name> -t cnv -f -v -o <path_to_output_folder> 
 
-
+```
 #### 3. Output
 
 After varan.py has run successfully, the resulted output folder should have the following organization and content:
+
 ```
-cancer_name
+folder_name
 ├── data_clinical_sample.xlsx
 ├── case_lists
 │   ├── cases_cna.txt

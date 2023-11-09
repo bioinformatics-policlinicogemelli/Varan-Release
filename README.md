@@ -43,6 +43,9 @@ Click  <a  href="https://github.com/bioinformatics-policlinicogemelli/Varan-Rele
 <br>All the installation info for samtools and its libraries htslib and bcftools can be found <a href="https://www.htslib.org/download/">here</a>
 <br> --> Tested version: 1.18
 
+* <b>Loguru</b> <br><p align="justify"><a href="https://pypi.org/project/loguru/">Loguru</a> is a library which aims to bring enjoyable logging in Python <a href="https://www.htslib.org/download/"> </a>
+<br> --> Tested version: 0.7.2
+
 
 To correctly install and use Varan :
 1. Open a terminal
@@ -107,9 +110,8 @@ This type of installation has been tested on:
 
 5. Once inside the virtual environment, the installation can be checked, following the same procedure explained in local installation.
 
-<p align="justify">⚠️ <i>Mac Apple Silicon M1-M2 model have shown different problems with this kind of procedure. It is strongly recommended to use a local installation.</i>
-
-
+<p align="justify">⚠️ <i>Mac Apple Silicon M1-M2 model have shown different problems with this kind of procedure. It is strongly recommended to use a local installation.If there are problems with the environments file, in the folder where vep is located, activate the conda environment(conda activate folder_name) and install all dependencies manually(enviroments.yml).</i>
+ 
 
 ## Usage
 

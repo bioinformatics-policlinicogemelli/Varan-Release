@@ -162,7 +162,7 @@ def update_main(path,newpath,output):
     meta_case_main(cancer,vus,output)
 
     validateFolderlog(output)
-  
+    
     if len(old_versions)>1:
         compare_version(newpath,path,"update",output)
 

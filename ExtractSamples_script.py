@@ -69,23 +69,23 @@ def extract_main(oldpath,removepath,outputfolder):
         logger.warning("data_sv.txt not found in current folder. Skipping")
     
     #
-    o_cases_cna=os.path.join(oldpath,"case_lists/cases_cna.txt")
-    if os.path.exists(o_cases_cna):
-        extract_caselist_cna(o_cases_cna,sampleIds,output_caseslists)
-    else:
-        logger.warning("cases_cna.txt not found in 'case_lists' folder. Skipping")
+    # o_cases_cna=os.path.join(oldpath,"case_lists/cases_cna.txt")
+    # if os.path.exists(o_cases_cna):
+    #     extract_caselist_cna(o_cases_cna,sampleIds,output_caseslists)
+    # else:
+    #     logger.warning("cases_cna.txt not found in 'case_lists' folder. Skipping")
     
-    o_cases_sequenced=os.path.join(oldpath,"case_lists/cases_sequenced.txt")
-    if os.path.exists(o_cases_sequenced):
-        extract_caselist_sequenced(o_cases_sequenced,sampleIds,output_caseslists)
-    else:
-        logger.warning("cases_sequenced.txt not found in 'case_lists' folder. Skipping")
-    #  
-    o_cases_sv=os.path.join(oldpath,"case_lists/cases_sv.txt")
-    if os.path.exists(o_cases_sv):
-        extract_caselist_sv(o_cases_sv,sampleIds,output_caseslists)
-    else:
-        logger.warning("cases_sv.txt not found in 'case_lists' folder. Skipping")
+    # o_cases_sequenced=os.path.join(oldpath,"case_lists/cases_sequenced.txt")
+    # if os.path.exists(o_cases_sequenced):
+    #     extract_caselist_sequenced(o_cases_sequenced,sampleIds,output_caseslists)
+    # else:
+    #     logger.warning("cases_sequenced.txt not found in 'case_lists' folder. Skipping")
+    # #  
+    # o_cases_sv=os.path.join(oldpath,"case_lists/cases_sv.txt")
+    # if os.path.exists(o_cases_sv):
+    #     extract_caselist_sv(o_cases_sv,sampleIds,output_caseslists)
+    # else:
+    #     logger.warning("cases_sv.txt not found in 'case_lists' folder. Skipping")
 
 
     cancer,vus=extract_info_from_meta(oldpath)

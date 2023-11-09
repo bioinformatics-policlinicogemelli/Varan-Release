@@ -110,7 +110,7 @@ This type of installation has been tested on:
 
 5. Once inside the virtual environment, the installation can be checked, following the same procedure explained in local installation.
 
-<p align="justify">⚠️ <i>Mac Apple Silicon M1-M2 model have shown different problems with this kind of procedure. It is strongly recommended to use a local installation.If there are problems with the environments file, in the folder where vep is located, activate the conda environment(conda activate folder_name) and install all dependencies manually(enviroments.yml).</i>
+<p align="justify">⚠️ <i>Mac Apple Silicon M1-M2 model have shown different problems with this kind of procedure. It is strongly recommended to use a local installation.If there are problems with the environments file, in the folder where vep is located, activate the conda environment(conda activate folder_name) and install all dependencies manually(read enviroments.yml).</i>
  
 
 ## Usage

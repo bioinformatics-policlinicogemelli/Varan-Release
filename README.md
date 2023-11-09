@@ -13,7 +13,7 @@ Varan 2.0 is a Python-based application that provides a pipeline to automaticall
 Specifically, starting with a folder containing the vcf files, this application can create a study folder ready to be uploaded to cBioPortal.<br>
 This application also gives the possibility to work on existing study folder, with following features:
 
-* update a study folder by adding new samples 
+* update a study folder by adding new samples or by updating older one 
 * extract a list of samples
 * remove a list of samples <br>
 

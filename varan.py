@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 from loguru import logger 
+import shutil
 
 @logger.catch()
 def varan(args):
@@ -67,6 +68,18 @@ def varan(args):
             logger.info("Starting Validation Folder")
             validateFolderlog(output_folder)
             logger.success("The end! The study is ready to be uploaded on cBioportal")
+            shutil.make_archive(os.path.join(output_folder,"snv_filtered"),"zip",os.path.join(output_folder,"snv_filtered"))
+            shutil.rmtree(os.path.join(output_folder,"snv_filtered"))
+            #
+            shutil.make_archive(os.path.join(output_folder,"NoVus"),"zip",os.path.join(output_folder,"NoVus"))
+            shutil.rmtree(os.path.join(output_folder,"NoVus"))
+            #
+            #
+            shutil.make_archive(os.path.join(output_folder,"NoBenign"),"zip",os.path.join(output_folder,"NoBenign"))
+            shutil.rmtree(os.path.join(output_folder,"NoBenign"))
+            #
+            shutil.make_archive(os.path.join(output_folder,"maf"),"zip",os.path.join(output_folder,"maf"))
+            shutil.rmtree(os.path.join(output_folder,"maf"))
         
     ############################
     #         UPDATE           #

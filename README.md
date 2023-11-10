@@ -149,7 +149,7 @@ U --> G[UPLOAD_ON_CBIOPORTAL]
 To create a new study folder, the user must give .vcf files as input to the program.
 This can be done as follows:
 
-<b>Folder</b>: user must organize a folder containing all of the vcf files and a csv file where the patient IDs and samples IDs are listed. The structure of this folder have to follow the one reported below </li>
+<b>Folder</b>: user must organize a folder containing all of the vcf files and a tsv file where the patient IDs and samples IDs are listed. The structure of this folder have to follow the one reported below </li>
 
 ```
 input_folder/

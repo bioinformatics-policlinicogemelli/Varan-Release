@@ -3,13 +3,13 @@
 # Varan-Release
 
 
-# VARAN 2.0
+# VARAN
 
 
 ## Introduction  
 
 <p align="justify">
-Varan 2.0 is a Python-based application that provides a pipeline to automatically prepare cancer genomics data in the specific format supported by the <a href="https://www.cbioportal.org/">cBioPortal</a>.<br>
+Varan is a Python-based application that provides a pipeline to automatically prepare cancer genomics data in the specific format supported by the <a href="https://www.cbioportal.org/">cBioPortal</a>.<br>
 Specifically, starting with a folder containing the vcf files, this application can create a study folder ready to be uploaded to cBioPortal.<br>
 This application also gives the possibility to work on existing study folder, with following features:
 

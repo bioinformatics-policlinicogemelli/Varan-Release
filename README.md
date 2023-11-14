@@ -2,7 +2,10 @@
 
 # Varan-Release
 
-
+<p align="center">
+<img src="/logo_VARAN.png" alt="MarineGEO circle logo" style="height: 400px; width:400px;"/>
+</p>
+ 
 # VARAN
 
 

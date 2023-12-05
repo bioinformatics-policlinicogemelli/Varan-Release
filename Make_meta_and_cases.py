@@ -331,7 +331,7 @@ def meta_case_main(cancer,vus,output_folder):
     ########### CASE LIST FUNCTION ###########
 
     if os.path.exists(os.path.join(output_folder,"data_mutations_extended.txt")):
-        file_extended=pd.read_csv(os.path.join(output_folder,"data_mutations_extended.txt"),sep="\t")
+        file_extended=pd.read_csv(os.path.join(output_folder,"data_mutations_extended.txt"),sep="\t",on_bad_lines='skip')
         if file_extended.shape[0]>1:
             populate_cases_sequenced(cancer,project_name, vus, output_folder,cases_list_dir,version,logger)
         else:

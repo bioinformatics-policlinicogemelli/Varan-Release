@@ -138,14 +138,17 @@ def tabella_to_dict(df):
 def get_snv_from_folder(inputFolderSNV):
     files= os.listdir(inputFolderSNV)
     snv_vcf_files=[file for file in files if file.endswith("vcf")]
-    check=list(map(lambda x: check_snv_vcf(x,inputFolderSNV),snv_vcf_files))
-    incorrect_files=[]
-    for i, check_res in enumerate(check):
-        if not check_res:
-            incorrect_files.append(snv_vcf_files[i])
-    if len(incorrect_files)!=0:
-        logger.critical(f"It seems that the files \n{incorrect_files} \nare not SNV! Please check your SNV input data and try again.")
-        exit()
+    try:
+        check=list(map(lambda x: check_snv_vcf(x,inputFolderSNV),snv_vcf_files))
+        incorrect_files=[]
+        for i, check_res in enumerate(check):
+            if not check_res:
+                incorrect_files.append(snv_vcf_files[i])
+        if len(incorrect_files)!=0:
+            logger.critical(f"It seems that the files \n{incorrect_files} \nare not SNV! Please check your SNV input data and try again.")
+            exit()
+    except:
+        logger.warning("Could not check VCF type")
     logger.info(f"#{len(snv_vcf_files)} vcf files found in SNV folder")
     return snv_vcf_files
 
@@ -289,6 +292,19 @@ def write_clinical_sample(output_folder, table_dict):
     for k, v in table_dict.items():
         cil_sample.write(v[0]+'\t'+k+'.bam\t'+v[1]+'\t'+v[2]+'\t'+v[3]+'\t'+v[4]+'\n')
     cil_sample.close()
+    
+def write_clinical_sample_only(output_folder, table_dict):
+    logger.info("Writing data_clinical_sample.txt file...")
+    data_clin_samp = os.path.join(output_folder, 'data_clinical_sample.txt')
+    cil_sample = open(data_clin_samp, 'w')
+    cil_sample.write('#Patient Identifier\tSample Identifier\n')
+    cil_sample.write('#Patient identifier\tSample Identifier\n')
+    cil_sample.write('#STRING\tSTRING\n')
+    cil_sample.write('#1\t1\n')
+    cil_sample.write('PATIENT_ID\tSAMPLE_ID\n')
+    for k, v in table_dict.items():
+        cil_sample.write(v[0]+'\t'+k+'.bam\n')
+    cil_sample.close()
 
 def check_cna_vcf(file,inputFolderCNV):
     vcf=pd.read_csv(os.path.join(inputFolderCNV,file),comment="#",sep="\t",names=["#CHROM","POS","ID","REF","ALT","QUAL","FILTER","INFO","FORMAT","Sample"])
@@ -299,6 +315,7 @@ def check_cna_vcf(file,inputFolderCNV):
     
 def check_snv_vcf(file,inputFolderSNV):
     vcf=pd.read_csv(os.path.join(inputFolderSNV,file),comment="#",sep="\t",names=["#CHROM","POS","ID","REF","ALT","QUAL","FILTER","INFO","FORMAT","Sample"])
+    
     if vcf.loc[0]["FORMAT"].startswith("GT"):
         return True
     else:
@@ -398,42 +415,46 @@ def walk_folder(input, output_folder,  vcf_type=None ,filter_snv=False): #overwr
         exit()
 
     tsvpath=os.path.join(input,tsvfiles)    
+    
     combined_dict = get_combinedVariantOutput_from_folder(input,tsvpath)
     
     fusion_table_file = os.path.join(output_folder,'data_sv.txt')
-    
-    for k, v in combined_dict.items():
-        logger.info(f"Reading Fusion info in CombinedOutput file {v}...")
-        try:
-            fusions = tsv.get_fusions(v)
-        except Exception as e:
-            logger.error(f"Something went wrong while reading Fusion section of file {v}")
-        if len(fusions)==0:
-            logger.info(f"No Fusions found in {v}")
-            continue
-        else:
-            logger.info(f"Fusions found in {v}")
-        if not os.path.exists(fusion_table_file):
-            logger.info(f"Creating data_sv.txt file...")
-            fusion_table = open(fusion_table_file, 'w')
-            header = 'Sample_Id\tSV_Status\tClass\tSite1_Hugo_Symbol\tSite2_Hugo_Symbol\tNormal_Paired_End_Read_Count\tEvent_Info\tRNA_Support\n'
-            fusion_table.write(header)
-        else:
-            fusion_table = open(fusion_table_file, 'a')
-        for fus in fusions:
-            if len(fusions) > 0:
-                Site1_Hugo_Symbol = fus['Site1_Hugo_Symbol']
-                Site2_Hugo_Symbol = fus['Site2_Hugo_Symbol']
-                if Site2_Hugo_Symbol == 'CASC1':
-                    Site2_Hugo_Symbol = 'DNAI7'
-                Site1_Chromosome = fus['Site1_Chromosome']
-                Site2_Chromosome = fus['Site2_Chromosome']
-                Site1_Position = fus['Site1_Position']
-                Site2_Position = fus['Site2_Position']
+    if not os.path.exists(os.path.join(input,"CombinedOutput")) or len(os.listdir(os.path.join(input,"CombinedOutput")))==0 :
+        logger.warning("No fusions found")
+    else:    
+        for k, v in combined_dict.items():
+            logger.info(f"Reading Fusion info in CombinedOutput file {v}...")
+            fusions=[]
+            try:
+                fusions = tsv.get_fusions(v)
+            except Exception as e:
+                logger.error(f"Something went wrong while reading Fusion section of file {v}")
+            if len(fusions)==0:
+                logger.info(f"No Fusions found in {v}")
+                continue
+            else:
+                logger.info(f"Fusions found in {v}")
+            if not os.path.exists(fusion_table_file):
+                logger.info(f"Creating data_sv.txt file...")
+                fusion_table = open(fusion_table_file, 'w')
+                header = 'Sample_Id\tSV_Status\tClass\tSite1_Hugo_Symbol\tSite2_Hugo_Symbol\tNormal_Paired_End_Read_Count\tEvent_Info\tRNA_Support\n'
+                fusion_table.write(header)
+            else:
+                fusion_table = open(fusion_table_file, 'a')
+            for fus in fusions:
+                if len(fusions) > 0:
+                    Site1_Hugo_Symbol = fus['Site1_Hugo_Symbol']
+                    Site2_Hugo_Symbol = fus['Site2_Hugo_Symbol']
+                    if Site2_Hugo_Symbol == 'CASC1':
+                        Site2_Hugo_Symbol = 'DNAI7'
+                    Site1_Chromosome = fus['Site1_Chromosome']
+                    Site2_Chromosome = fus['Site2_Chromosome']
+                    Site1_Position = fus['Site1_Position']
+                    Site2_Position = fus['Site2_Position']
 
-                fusion_table.write(k+'.bam\tSOMATIC\tFUSION\t'+\
-str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_Read_Count']+\
-'\t'+fus['Event_Info']+' Fusion\t'+'Yes\n') 
+                    fusion_table.write(k+'.bam\tSOMATIC\tFUSION\t'+\
+    str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_Read_Count']+\
+    '\t'+fus['Event_Info']+' Fusion\t'+'Yes\n') 
     
     ###############################
     ###       MAKES TABLE       ###
@@ -446,50 +467,54 @@ str(Site1_Hugo_Symbol)+'\t'+str(Site2_Hugo_Symbol)+'\t'+fus['Normal_Paired_End_R
 
     logger.info("Writing clinical files...")
     write_clinical_patient(output_folder, table_dict_patient)
+    
+    if not os.path.exists(os.path.join(input,"CombinedOutput")) or len(os.listdir(os.path.join(input,"CombinedOutput")))==0  :
+        logger.warning("Data clinical sample will be written without TMB and MSI information")
+    else:
+        combined_dict = get_combinedVariantOutput_from_folder(input,tsvpath)
 
-    combined_dict = get_combinedVariantOutput_from_folder(input,tsvpath)
+        MSI_THR=config.get('MSI', 'THRESHOLD')
 
-    MSI_THR=config.get('MSI', 'THRESHOLD')
-
-    TMB=ast.literal_eval(config.get('TMB', 'THRESHOLD'))
-    for k, v in combined_dict.items():
-        logger.info(f"Reading Tumor clinical parameters info in CombinedOutput file {v}...")
-        try:
-            tmv_msi = tsv.get_msi_tmb(v)
-        except Exception as e:
-            logger.error(f"Something went wrong!")
-        logger.info(f"Tumor clinical parameters Values found: {tmv_msi}")
-      
-        if tmv_msi["MSI"][0][1]!="" and  tmv_msi['MSI'][0][1]!="NA":
-            if float(tmv_msi['MSI'][0][1]) >= 40:
-                table_dict_patient[k].append(tmv_msi['MSI'][1][1])   
+        TMB=ast.literal_eval(config.get('TMB', 'THRESHOLD'))
+        for k, v in combined_dict.items():
+            logger.info(f"Reading Tumor clinical parameters info in CombinedOutput file {v}...")
+            try:
+                tmv_msi = tsv.get_msi_tmb(v)
+            except Exception as e:
+                logger.error(f"Something went wrong!")
+            logger.info(f"Tumor clinical parameters Values found: {tmv_msi}")
+        
+            if tmv_msi["MSI"][0][1]!="" and  tmv_msi['MSI'][0][1]!="NA":
+                if float(tmv_msi['MSI'][0][1]) >= 40:
+                    table_dict_patient[k].append(tmv_msi['MSI'][1][1])   
+                else:
+                    table_dict_patient[k].append('NA')
             else:
                 table_dict_patient[k].append('NA')
-        else:
-            table_dict_patient[k].append('NA')
-        table_dict_patient[k].append(tmv_msi['TMB_Total'])
+            table_dict_patient[k].append(tmv_msi['TMB_Total'])
 
-        if not tmv_msi["MSI"][0][1]=="" and not tmv_msi['MSI'][0][1]=="NA":
-            if float(tmv_msi['MSI'][0][1]) < float(MSI_THR):
-                table_dict_patient[k].append("Stable")   
+            if not tmv_msi["MSI"][0][1]=="" and not tmv_msi['MSI'][0][1]=="NA":
+                if float(tmv_msi['MSI'][0][1]) < float(MSI_THR):
+                    table_dict_patient[k].append("Stable")   
+                else:
+                    table_dict_patient[k].append('Unstable')
             else:
-                table_dict_patient[k].append('Unstable')
-        else:
-            table_dict_patient[k].append('NI')
+                table_dict_patient[k].append('NI')
 
-        found = False
-        for _k, _v in TMB.items():
-            if not tmv_msi["TMB_Total"]=="" and not tmv_msi["TMB_Total"]=="NA":
-                if float(tmv_msi["TMB_Total"])<=float(_v):
-                    table_dict_patient[k].append(_k)
-                    found=True
-                    break
-            else:
+            found = False
+            for _k, _v in TMB.items():
+                if not tmv_msi["TMB_Total"]=="" and not tmv_msi["TMB_Total"]=="NA":
+                    if float(tmv_msi["TMB_Total"])<=float(_v):
+                        table_dict_patient[k].append(_k)
+                        found=True
+                        break
+                else:
+                    table_dict_patient[k].append(list(TMB.keys())[-1])
+            if found==False:
                 table_dict_patient[k].append(list(TMB.keys())[-1])
-        if found==False:
-            table_dict_patient[k].append(list(TMB.keys())[-1])
 
 
-    write_clinical_sample(output_folder, table_dict_patient)
+            write_clinical_sample(output_folder, table_dict_patient)
+    write_clinical_sample_only(output_folder, table_dict_patient)
     logger.success("Walk script completed!\n")
     return output_folder

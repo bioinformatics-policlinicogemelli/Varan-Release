@@ -103,7 +103,7 @@ def populate_cases_sequenced(cancer,project_name, vus,folder, cases_list_dir,ver
     """
 
     try:
-        data_sequenced=pd.read_csv(os.path.join(folder,"data_mutations_extended.txt"),sep="\t")
+        data_sequenced=pd.read_csv(os.path.join(folder,"data_mutations_extended.txt"),sep="\t",on_bad_lines='skip')
     except pd.errors.EmptyDataError:
         logger.error("data_mutations_extended.txt is empty, skipping this step!")
         return

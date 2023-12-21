@@ -72,11 +72,11 @@ def varan(args):
             shutil.rmtree(os.path.join(output_folder,"snv_filtered"))
             #
             shutil.make_archive(os.path.join(output_folder,"NoVus"),"zip",os.path.join(output_folder,"NoVus"))
-            shutil.rmtree(os.path.join(output_folder,"NoVus"))
+           # shutil.rmtree(os.path.join(output_folder,"NoVus"))
             #
             #
             shutil.make_archive(os.path.join(output_folder,"NoBenign"),"zip",os.path.join(output_folder,"NoBenign"))
-            shutil.rmtree(os.path.join(output_folder,"NoBenign"))
+          #  shutil.rmtree(os.path.join(output_folder,"NoBenign"))
             #
             shutil.make_archive(os.path.join(output_folder,"maf"),"zip",os.path.join(output_folder,"maf"))
             shutil.rmtree(os.path.join(output_folder,"maf"))

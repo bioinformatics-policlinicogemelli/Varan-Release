@@ -514,7 +514,7 @@ def walk_folder(input, output_folder,  vcf_type=None ,filter_snv=False): #overwr
                 table_dict_patient[k].append(list(TMB.keys())[-1])
 
 
-            write_clinical_sample(output_folder, table_dict_patient)
-    write_clinical_sample_only(output_folder, table_dict_patient)
+    write_clinical_sample(output_folder, table_dict_patient)
+    
     logger.success("Walk script completed!\n")
     return output_folder
